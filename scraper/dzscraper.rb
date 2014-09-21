@@ -54,7 +54,7 @@ class DZScraper
       }
 
       dz_data[:properties][:anchor] = td.css('a').first['name']
-      dz_data[:properties][:name] = td.css('span.subhead').first.text
+      dz_data[:properties][:name] = td.css('span.subhead').first.text.chomp
 
       url = td.css('a[target="_blank"]')
       dz_data[:properties][:url] = url.first['href'] if url.is_a?(Array)
@@ -107,7 +107,7 @@ class DZScraper
   # This translates the obfuscated email address from javascript
   def js_to_string(js)
     xml = js.text.string_between_markers('String.fromCharCode(', '))').split(',').map{|i| i.to_i.chr(Encoding::UTF_8)}.join
-    Nokogiri::HTML(xml).css('a').text
+    Nokogiri::HTML(xml).css('a').text.strip
   end
 
   # Finds the location array in the HTML
@@ -115,7 +115,7 @@ class DZScraper
     xml.to_s.string_between_markers('Location:</span>', '<br><br>')
       .split("\r\n")
       .select{ |s| s.strip != ''}
-      .map{ |s| s.strip.gsub('<br>', '').squeeze(' ').gsub(' ,', ',') }
+      .map{ |s| s.strip.gsub('<br>', '').squeeze(' ').gsub(' ,', ',').strip }
   end
 
   # Gets the description of the dropzone
