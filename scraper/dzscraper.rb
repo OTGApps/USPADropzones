@@ -134,7 +134,7 @@ class DZScraper
     atts[:training] = atts[:training].reject{|t| t.downcase == 'not reported' } if atts[:training]
 
     # Fix Aircraft
-    atts[:aircraft] = atts[:aircraft].map(&:titleize)
+    atts[:aircraft] = atts[:aircraft].map(&:titleize) if atts[:aircraft]
 
     atts
   end
@@ -175,9 +175,9 @@ class DZScraper
       loc_array[2] = loc_array[2] + ' 56093'
     end
     # Fix Jump Ohio
-    loc_array[2] = loc_array[2] + ' 44231' if loc_array[0].include?('(7D8)') && loc_array[2].start_with?('Parkman')
+    # loc_array[2] = loc_array[2] + ' 44231' if loc_array[0].include?('(7D8)') && loc_array[2].start_with?('Parkman')
     # Fix Skydive Superior
-    loc_array[3] = 'Superior, ' + loc_array[3] if loc_array[3].include?('54880')
+    loc_array[3] = 'Superior, ' + loc_array[3] if loc_array[3] && loc_array[3].include?('54880')
 
     loc_array
   end
