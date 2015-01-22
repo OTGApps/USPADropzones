@@ -78,6 +78,9 @@ class DZScraper
       dz_data[:properties][:anchor] = td.css('a').first['name']
       dz_data[:properties][:name] = td.css('span.subhead').first.text.chomp.strip
 
+      website = td.css('span.subhead').first.parent.css('a')
+      dz_data[:properties][:website] = website.first[:href] unless website.empty?
+
       url = td.css('a[target="_blank"]')
       dz_data[:properties][:url] = url.first['href'] if url.is_a?(Array)
 
