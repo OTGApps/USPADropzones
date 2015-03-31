@@ -162,7 +162,7 @@ class DZScraper
     end
 
     # Fix Palatka
-    loc_array[2] = 'Palatka FL, 32177' if loc_array[2] == 'Palatka FL, FL'
+    loc_array[2] = 'Palatka, FL 32177' if loc_array[2] == 'Palatka FL, FL'
     # Fix Skydive Palm Beach
     loc_array[2] = 'Wellington, FL 33470' if loc_array[2] == 'Wellington, FL'
     # Fix Skydive Greater Michigan City
