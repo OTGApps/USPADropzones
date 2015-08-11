@@ -7,4 +7,4 @@ This data was scraped from the [USPA website](http://www.uspa.org). I have inclu
 
 ## Roadmap
 
-1. Include international USPA certified DZs
+1. ~~Include international USPA certified DZs~~
