@@ -22,24 +22,43 @@ class String
 end
 
 class DZScraper
-  def urls
-    page = Nokogiri::HTML(open(local_files.first))
-    page.css('div#NavTabs li.Level2 a').map{ |e| URI.parse(e[:href]) }
+  def usa_urls
+    usa_base = "http://www.uspa.org/FindaDZ/GroupMemberListbyStateandTerritories/tabid/321/Default.aspx"
+    usa_base_page = Nokogiri::HTML(open(usa_base))
+    states = usa_base_page.css('div#NavTabs li.Level2 a').map{ |e| URI.parse(e[:href]) }
   end
 
-  def local_files
-    Dir["local_files/*.html"]
+  def international_urls
+    international_base = "http://www.uspa.org/FindaDZ/GroupMemberListbyCountry/tabid/408/Default.aspx"
+    international_base_page = Nokogiri::HTML(open(international_base))
+    countries = international_base_page.css('div#NavTabs li.Level2 a').map{ |e| URI.parse(e[:href]) }
   end
 
-  def scrape_local
-    scrape(local_files)
+  def save_files_locally
+    usa_urls.each do |url|
+      open("local_files/usa/#{url.to_s.split('/')[-4]}.html", 'wb') do |file|
+        file << open(url).read
+      end
+    end
+
+    international_urls.each do |url|
+      open("local_files/international/#{url.to_s.split('/')[-4]}.html", 'wb') do |file|
+        file << open(url).read
+      end
+    end
   end
 
-  def scrape_online
-    scrape(urls)
+  def usa_files
+    Dir["local_files/usa/*.html"]
   end
 
-  def scrape(urls)
+  def international_files
+    Dir["local_files/international/*.html"]
+  end
+
+  def scrape
+    urls = usa_files + international_files
+
     dzs = {
       type: 'FeatureCollection',
       features: []
@@ -199,10 +218,16 @@ class DZScraper
   end
 
 end
-
 dzs = DZScraper.new
 
-File.open("../dropzones-new.geojson","w") do |f|
-  # f.write(dzs.scrape_local.to_json)
-  f.write(dzs.scrape_online.to_json)
-end
+# Step 1
+# delete all files in local_files/usa and local_files/international/
+#Then run:
+#
+# dzs.save_files_locally
+
+# Step 2
+#
+# File.open("../dropzones-new.geojson","w") do |f|
+#   f.write(dzs.scrape.to_json)
+# end
