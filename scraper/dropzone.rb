@@ -129,17 +129,40 @@ class DZScraper
 
     detail = {}
     rows.search('dt').each do |node|
-      detail[parse_detail_key(node.text)] = parse_detail_value(node.next_element.text)
+      key = parse_detail_key(node.text)
+      detail[key] = parse_detail_value(node.next_element.text, key)
     end
     detail
   end
 
   def parse_detail_key(key)
-    key.gsub(":", "").gsub("/", "").gsub(" ", "_").strip.chomp.downcase.to_sym
+    new_key = key.downcase.strip.chomp.gsub(":", "").gsub("/", "").gsub(" ", "_").to_sym
+
+    case new_key
+    when :additional_information
+      :description
+    else
+      new_key
+    end
   end
 
-  def parse_detail_value(value)
-    value.gsub("\t", "").gsub("\n\n", "\n").strip.chomp
+  def parse_detail_value(value, key)
+    new_value = value.gsub("\t", "").gsub("\"\"", "\"").gsub("\n\n", "\n").strip.chomp
+
+    case key
+    when :aircraft
+      new_value.split(", ")
+    when :location
+      new_value.split("\n")
+    when :description
+      if value.downcase == "none listed"
+        ""
+      else
+        new_value
+      end
+    else
+      new_value
+    end
   end
 
   def parse_lat_lng(ll)
