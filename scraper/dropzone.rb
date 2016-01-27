@@ -22,24 +22,15 @@ class String
 end
 
 class DZScraper
-  def states
-    %w(AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MO MT NE NV NJ NM NY NC ND OH OK OR PA PR RI SC SD TN TX UT VT VA WA WV WI).sort
-  end
+  def initialize
+    cache_files_locally
 
-  def countries
-    %w(AR BE BR BG CA CN CR HR CZ DK FI FR DE GR GT IN IE IL IT JP KE LV MX MA NA PY PL PT RO RU RS ES CH TH AE).sort
-  end
+    pretty = true
+    result = scrape
 
-  def state_page_url(state)
-    "http://www.uspa.org/Drop-Zone-Locator/region/#{state}"
-  end
-
-  def country_page_url(country)
-    "http://www.uspa.org/Drop-Zone-Locator/country/#{country}"
-  end
-
-  def location_url(location)
-    "http://www.uspa.org/Drop-Zone-Locator?location=#{location}"
+    File.open("../dropzones-new.geojson","w") do |f|
+      f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
+    end
   end
 
   def parse_state_country(file_name, abbrev, folder)
@@ -53,8 +44,6 @@ class DZScraper
         url = location_url(loc_id)
         agent.get(url).save(dz_file_name)
       end
-
-      page = parse_file(dz_file_name)
     end
   end
 
@@ -64,9 +53,7 @@ class DZScraper
     }
   end
 
-  def initialize
-    dropzones = []
-
+  def cache_files_locally
     # Start with States
     states.each do |abbrev|
       file_name = "local_files/usa/#{abbrev}.html"
@@ -87,115 +74,102 @@ class DZScraper
       end
       parse_state_country(file_name, abbrev,'international')
     end
-
-
-    # Get the continents
-    # a.get('http://www.dropzone.com/dropzone') do |page|
-    #
-    #   # Loop over each continent and get the countries
-    #   page.search(".lightblueBox.sidecontent dt a").each do |continent|
-    #     continent_name = continent.text.chomp.strip
-    #     ap "Got #{continent_name}"
-    #
-    #     # Get countries
-    #     a.get(continent[:href]) do |continent_page|
-    #
-    #       continent_page.search('#catlisting dt').reject{|listing| listing.text.include?("(0)") }.each do |country|
-    #         country_name = country.search('a').text.chomp.strip
-    #         ap " - #{country_name}"
-    #
-    #         # Get states or dropzones
-    #         a.get(country.search('a')[:href]) do |country_page|
-    #           binding.pry
-    #           abort
-    #           ap country_page
-    #           dztable = country_page.search('.ftablecol a')
-    #
-    #           if dztable.nil?
-    #             ap "#{country_name} has states."
-    #           else
-    #             ap "#{country_name} does not have states."
-    #
-    #             #Get the individual dropzones for this country
-    #             get_dz_info(dztable)
-    #
-    #           end
-    #
-    #           # if country_page.search('.ftable')
-    #           # country_page.search('.ftable ')
-    #         end
-    #       end
-    #     end
-    #   end
-      # search_result = page.form_with(:id => 'gbqf') do |search|
-      #   search.q = 'Hello world'
-      # end.submit
-
-      # search_result.links.each do |link|
-      #   puts link.text
-      # end
-    # end
-
-
-    # get_continents
   end
 
   def parse_file(file_name)
     Nokogiri::HTML(open(file_name))
   end
 
-  # def get_dz_info(table)
-  #   ap table
-  #   ap table.search('a')
-  #   abort
-  #   table.search('a').reject{|link| link[:href].include?('review') }.each do |dz_link|
-  #     ap dz_link
-  #     abort
-  #   end
-  # end
+  def scrape
+    dzs = {
+      type: 'FeatureCollection',
+      features: []
+    }
+    all_files.map do |lf|
+      puts "Scraping #{lf}"
+      html = open(lf)
+      page = Nokogiri::HTML(html)
+      dzs[:features] << parse(page, lf)
+    end
+    dzs
+  end
 
-  # def get_continents
-    # page = parsed_page('http://www.dropzone.com/dropzone/')
+  def parse(page, file_name)
+    dz_data = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Point',
+        coordinates: []
+      }
+    }
 
-    # @continents = {}
-    # page.css('.lightblueBox.sidecontent dt a').each do |c|
-    #   @continents[c.text.chomp.strip] = {
-    #     url: c[:href]
-    #   }
-    # end
+    dz_data[:properties][:anchor] = file_name.split("/").last.split(".").first
+    dz_data[:properties][:name] = page.css('div.panel.panel-primary.dropzone > div.panel-heading > div > div > div.col-sm-8 > h3').text.chomp.strip
 
-    # @continents.each do |continent, value|
-    #   @continents[continent][:countries] = get_countries(value[:url])
-    # end
+    # Get additional details about the DZ
+    dz_data[:properties].merge!(details(page))
 
-    # ap @continents
-  # end
+    # Grab the lat and lng
+    dz_data[:geometry][:coordinates] = parse_lat_lng(dz_data[:properties].delete(:latlong))
 
-  # def get_countries(continent_url)
-  #   page = parsed_page(continent_url)
-  #   countries = {}
-  #   page.css('#catlisting dt').reject{|listing| listing.text.include?("(0)") }.each do |c|
-  #     a = c.css('a')
-  #     country_name = a.text.chomp.strip
-  #     url = a
-  #     ap country_name
-  #     ap url.attribute('href')
-  #     # countries[href.text.chomp.strip] = {
-  #     #   url: href[:href]
-  #     # }
-  #   end
-  #   countries
-  # end
 
-  def parsed_page(url)
-    html = open(URI.parse(url), "User-Agent" => "Mozilla/5.0 (compatible; MSIE 10.0; Macintosh; Intel Mac OS X 10_7_3; Trident/6.0)")
-    Nokogiri::HTML(html)
+    dz_data
+  end
+
+  def details(page)
+    rows = page.css('div.panel.panel-primary.dropzone > div.panel-body > div.col-sm-12.col-md-5')
+
+    detail = {}
+    rows.search('dt').each do |node|
+      detail[parse_detail_key(node.text)] = parse_detail_value(node.next_element.text)
+    end
+    detail
+  end
+
+  def parse_detail_key(key)
+    key.gsub(":", "").gsub("/", "").gsub(" ", "_").strip.chomp.downcase.to_sym
+  end
+
+  def parse_detail_value(value)
+    value.gsub("\t", "").gsub("\n\n", "\n").strip.chomp
+  end
+
+  def parse_lat_lng(ll)
+    ll.split(" : ")
+  end
+
+  def usa_files
+    Dir["local_files/usa/*/*.html"]
+  end
+
+  def international_files
+    Dir["local_files/international/*/*.html"]
+  end
+
+  def all_files
+    usa_files + international_files
+  end
+
+  def states
+    %w(AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MO MT NE NV NJ NM NY NC ND OH OK OR PA PR RI SC SD TN TX UT VT VA WA WV WI).sort
+  end
+
+  def countries
+    %w(AR BE BR BG CA CN CR HR CZ DK FI FR DE GR GT IN IE IL IT JP KE LV MX MA NA PY PL PT RO RU RS ES CH TH AE).sort
+  end
+
+  def state_page_url(state)
+    "http://www.uspa.org/Drop-Zone-Locator/region/#{state}"
+  end
+
+  def country_page_url(country)
+    "http://www.uspa.org/Drop-Zone-Locator/country/#{country}"
+  end
+
+  def location_url(location)
+    "http://www.uspa.org/Drop-Zone-Locator?location=#{location}"
   end
 end
 
 dzs = DZScraper.new
-
-# File.open("../dropzones-new.geojson","w") do |f|
-#   # f.write(dzs.scrape_local.to_json)
-#   f.write(dzs.scrape_online.to_json)
-# end
