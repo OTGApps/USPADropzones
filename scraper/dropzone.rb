@@ -80,16 +80,23 @@ class DZScraper
     Nokogiri::HTML(open(file_name))
   end
 
+  def skip_anchors
+    @_skip_anchors ||= [1179, 1149, 1185, 1189, 1173]
+  end
+
   def scrape
     dzs = {
       type: 'FeatureCollection',
       features: []
     }
     all_files.map do |lf|
-      puts "Scraping #{lf}"
+      # puts "Scraping #{lf}"
       html = open(lf)
       page = Nokogiri::HTML(html)
-      dzs[:features] << parse(page, lf)
+
+      parsed = parse(page, lf)
+
+      dzs[:features] << parsed unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
     dzs
   end
