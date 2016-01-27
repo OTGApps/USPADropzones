@@ -3,6 +3,24 @@ require 'open-uri'
 require 'bundler'
 Bundler.require
 
+class String
+  def string_between_markers marker1, marker2
+    self[/#{Regexp.escape(marker1)}(.*?)#{Regexp.escape(marker2)}/m, 1]
+  end
+
+  def titleize
+    split(/(\W)/).map(&:capitalize).join
+  end
+
+  def underscore
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
+
 class DZScraper
   def states
     %w(AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MO MT NE NV NJ NM NY NC ND OH OK OR PA PR RI SC SD TN TX UT VT VA WA WV WI).sort
