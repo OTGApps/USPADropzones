@@ -132,7 +132,8 @@ class DZScraper
       key = parse_detail_key(node.text)
       detail[key] = parse_detail_value(node.next_element.text, key)
     end
-    detail
+
+    detail.merge(parse_amenities(page))
   end
 
   def parse_detail_key(key)
@@ -147,11 +148,17 @@ class DZScraper
   end
 
   def parse_detail_value(value, key)
-    new_value = value.gsub("\t", "").gsub("\"\"", "\"").gsub("\n\n", "\n").strip.chomp
+    new_value = if value.is_a?(Array)
+      value.map{|v| v.gsub("\t", "").gsub("\"\"", "\"").gsub("\n\n", "\n").strip.chomp }
+    else
+      value.gsub("\t", "").gsub("\"\"", "\"").gsub("\n\n", "\n").strip.chomp
+    end
 
     case key
     when :aircraft
-      new_value.split(", ")
+      new_value.split(", ").map do |a|
+        a.gsub(/C-([0-9]{3})/, "Cessna #{$1}") # Fix Cessnas
+      end
     when :location
       new_value.split("\n")
     when :description
@@ -160,6 +167,10 @@ class DZScraper
       else
         new_value
       end
+    when :training
+      new_value.map do |v|
+        v.gsub("(", " (").gsub("  (", " (")
+      end
     else
       new_value
     end
@@ -167,6 +178,38 @@ class DZScraper
 
   def parse_lat_lng(ll)
     ll.split(" : ")
+  end
+
+  def parse_amenities(page)
+    amenities = page.css('dl.amenities')
+    all_training = []
+    all_services = []
+
+    got_training = false
+    got_services = false
+
+    amenities.search("dd, dt").each do |a|
+      ap a.name
+      ap a.text
+      if !got_training && a.name == "dt"
+        ap "got training"
+        got_training = true
+      elsif !got_services && a.name == "dt"
+        ap "got services"
+        got_services = true
+      elsif got_training && !got_services
+        ap "adding to training"
+        all_training << a.text
+      elsif got_services
+        ap "adding to services"
+        all_services << a.text
+      end
+    end
+
+    {
+      training: parse_detail_value(all_training, :training),
+      services: parse_detail_value(all_services, :services)
+    }
   end
 
   def usa_files
