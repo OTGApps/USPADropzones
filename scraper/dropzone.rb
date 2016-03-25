@@ -154,31 +154,51 @@ class DZScraper
         "Varies"
       else
         new_value.split(", ").map do |a|
-          # Fix Cessnas
           new_a = a.split("--").first.chomp(" ").chomp(",")
+          new_a = new_a.gsub("1-", "1 ")
 
+          # Fix Aircraft Names
           new_a = new_a.gsub(/C-([0-9]{3})/, 'Cessna \1')
+                       .gsub("P-750", "PAC 750")
+                       .gsub("Skyvan", "SkyVan")
+                       .gsub("Supervan", "SuperVan")
+                       .gsub("R44", "Robinson 44")
+                       .gsub("50HP ", "")
+                       .gsub("Caravan SubperVan", "SuperVan")
+                       .gsub("SMG92-", "SMG-92 ")
+                       .gsub("c-182", "Cessna 182")
+                       .gsub("C ", "Cessna ")
+                       .gsub("C-", "Cessna ")
+                       .gsub("BlackHawkGrand", "BlackHawk Grand")
+                       .gsub("Cessna Caravan", "Cessna 208 Caravan")
           #          .gsub(/^([0-9]{1})-/, '\1 ')
-          #          .gsub("P-750", "PAC 750")
           #          .gsub("Super Grand Caravan", "Super Caravan")
-          #          .gsub("208B Supervan", "208 Super Caravan")
           #          .gsub("Super Cessna 182", "Cessna 182 - Super")
-          # new_a = "2 Twin Otters" if new_a == "2"
 
-          # if new_a.downcase.include?("beech")
-            # new_a = new_a.titleize
-          # end
+          # Fix BlackHawk
+          if new_a.downcase.end_with?("blackhawk")
+            new_a = new_a[0] + " Cessna 208 BlackHawk Grand Caravan"
+          end
 
-          # new_a << "PA31" if new_a.end_with?("Navajo")
-          # new_a = "1 #{new_a}" unless new_a[0].is_i?
+          # Fix Antonov An-2
+          if new_a.downcase.end_with?("an-2") || new_a.downcase.end_with?("an2")
+            new_a = new_a[0] + " Antonov An-2"
+          end
 
+          # Fix Let L-410 Turbolet
+          if new_a.match("L410") || new_a.match("Let 410") || new_a.match("L-410")
+            new_a = new_a[0] + " Let L-410 Turbolet"
+          end
 
+          new_a = new_a.titleize if new_a.downcase.include?("beech") || new_a.downcase.include?("casa")
+          new_a << " PA31" if new_a.end_with?("Navajo")
+          new_a = "1 #{new_a}" unless new_a[0].is_i?
 
           # Fix issues with plurals
           new_a << "s" if new_a.start_with?("2") && !new_a.end_with?("s")
           new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
-          new_a
-        end
+          new_a.end_with?("Super") ? nil : new_a
+        end.compact
       end
     when :location
       new_value.split("\n")
