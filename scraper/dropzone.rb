@@ -2,6 +2,7 @@ require 'json'
 require 'open-uri'
 require 'bundler'
 Bundler.require
+require './string'
 
 class String
   def is_i?
