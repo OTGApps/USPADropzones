@@ -164,7 +164,7 @@ class DZScraper
         # Fix issues with plurals
         new_a << "s" if new_a.start_with?("2") && !new_a.end_with?("s")
         new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
-        new_a
+        new_a.chomp(",")
       end
     when :location
       new_value.split("\n")
