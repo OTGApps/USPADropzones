@@ -1,4 +1,4 @@
-require 'json'
+# require 'json'
 require 'open-uri'
 require 'bundler'
 Bundler.require
