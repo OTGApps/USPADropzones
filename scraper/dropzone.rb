@@ -286,11 +286,15 @@ class DZScraper
   end
 
   def states
-    %w(AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MO MT NE NV NJ NM NY NC ND OH OK OR PA PR RI SC SD TN TX UT VT VA WA WV WI).sort
+    # Dir.chdir('local_files/usa')
+    # Dir.glob('*').select {|f| File.directory? f}.sort
+    ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MT", "NC", "ND", "NE", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV"]
   end
 
   def countries
-    %w(AR BE BR BG CA CN CR HR CZ DK FI FR DE GR GT IN IE IL IT JP KE LV MX MA NA PY PL PT RO RU RS ES CH TH AE).sort
+    # Dir.chdir('local_files/international')
+    # Dir.glob('*').select {|f| File.directory? f}.sort
+    ["AE", "AR", "BE", "BG", "BR", "CA", "CH", "CN", "CR", "CZ", "DE", "DK", "ES", "FI", "FR", "GR", "GT", "HR", "IE", "IL", "IN", "IT", "JP", "KE", "LV", "MA", "MX", "NA", "PL", "PT", "PY", "RO", "RS", "RU", "TH"]
   end
 
   def state_page_url(state)
