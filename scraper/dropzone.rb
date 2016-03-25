@@ -101,6 +101,7 @@ class DZScraper
 
     # Get additional details about the DZ
     dz_data[:properties].merge!(details(page))
+    dz_data[:properties] = dz_data[:properties].sort.to_h
 
     # Grab the lat and lng
     dz_data[:geometry][:coordinates] = parse_lat_lng(dz_data[:properties].delete(:latlong))
