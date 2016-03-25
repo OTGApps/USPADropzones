@@ -184,7 +184,7 @@ class DZScraper
   end
 
   def parse_lat_lng(ll)
-    ll.split(" : ").map{|ll| ll.gsub("30-", "30.").gsub("/", "") }
+    ll.split(" : ").map{|ll| ll.gsub("30-", "30.").gsub("/", "") }.map(&:to_f).reverse
   end
 
   def parse_amenities(page)
