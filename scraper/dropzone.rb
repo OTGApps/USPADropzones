@@ -82,6 +82,7 @@ class DZScraper
 
       dzs[:features] << parsed unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
+    dzs[:features] = dzs[:features].sort_by{|f| f[:properties][:name]}
     dzs
   end
 
