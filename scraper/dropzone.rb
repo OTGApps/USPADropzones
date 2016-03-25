@@ -49,7 +49,7 @@ class DZScraper
       parse_state_country(file_name, abbrev, 'usa')
     end
 
-    # Start with States
+    # Then to countries
     countries.each do |abbrev|
       file_name = "local_files/international/#{abbrev}.html"
       unless File.file?(file_name)
