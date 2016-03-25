@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html  lang="en-US">
+<head id="Head">
+<!--*********************************************-->
+<!-- DNN Platform - http://www.dnnsoftware.com   -->
+<!-- Copyright (c) 2002-2015, by DNN Corporation -->
+<!--*********************************************-->
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta name="REVISIT-AFTER" content="1 DAYS" />
+<meta name="RATING" content="GENERAL" />
+<meta name="RESOURCE-TYPE" content="DOCUMENT" />
+<meta content="text/javascript" http-equiv="Content-Script-Type" />
+<meta content="text/css" http-equiv="Content-Style-Type" /><title>
+	Drop Zone Locator
+</title><meta id="MetaDescription" name="DESCRIPTION" content="Drop Zone Locator" /><meta id="MetaKeywords" name="KEYWORDS" content="Drop Zone Locator,DotNetNuke,DNN" /><meta id="MetaGenerator" name="GENERATOR" content="DotNetNuke " /><meta id="MetaRobots" name="ROBOTS" content="INDEX, FOLLOW" /><link href="/Portals/_default/default.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Resources/Search/SearchSkinObjectPreview.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/DesktopModules/etchasoft/Simplify.FindAMember/module.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Portals/_default/Skins/20066-UnlimitedColorsPack-048/skin.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Portals/_default/Skins/20066-UnlimitedColorsPack-048/InsidePage.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Portals/_default/Containers/20066-UnlimitedColorsPack-048/container.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Portals/_default/Containers/BD002-DeepOrange/container.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Portals/0/portal.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/desktopmodules/digarticle/templates/Blog/template.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/desktopmodules/digarticle/styles/Green/style.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/Resources/Shared/Scripts/bootstrap.min.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><link href="/desktopmodules/digarticle/styles/Black/style.css?cdv=459" media="all" type="text/css" rel="stylesheet"/><script src="/Resources/libraries/jQuery/01_09_01/jquery.js?cdv=459" type="text/javascript"></script><script src="/Resources/libraries/jQuery-Migrate/01_02_01/jquery-migrate.js?cdv=459" type="text/javascript"></script><script src="/Resources/libraries/jQuery-UI/01_10_03/jquery-ui.js?cdv=459" type="text/javascript"></script><!--[if LT IE 9]><link id="IE6Minus" rel="stylesheet" type="text/css" href="/Portals/_default/Skins/20066-UnlimitedColorsPack-048/ie.css" /><![endif]--><style>
+.startcontent {
+    margin-top: 160px!important;
+}
+
+@media only screen and (max-width: 767px) {
+.startcontent {
+    margin-top: 0px!important;
+}
+#dnn_content {
+    padding-top: 0px;
+}
+}
+</style><link rel='SHORTCUT ICON' href='/Portals/0/favicon.ico?ver=2015-10-21-092803-383' type='image/x-icon' />     
+        
+			    <script type="text/javascript">
+			      var _gaq = _gaq || [];
+			      _gaq.push(['_setAccount', 'UA-4813784-1']);
+			      _gaq.push(['_trackPageview']);
+			      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-4813784-1', 'auto');
+  ga('send', 'pageview');
+			 
+			      (function() {
+				    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			      })();
+			    </script>
+        
+		  <meta name="viewport" content="width=device-width,height=device-height, minimum-scale=1.0, maximum-scale=1.0" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /></head>
+<body id="Body">
+    
+    <form method="post" action="/Drop-Zone-Locator?location=1165" id="Form" enctype="multipart/form-data">
+<div class="aspNetHidden">
+<input type="hidden" name="StylesheetManager_TSSM" id="StylesheetManager_TSSM" value="" />
+<input type="hidden" name="ScriptManager_TSM" id="ScriptManager_TSM" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form'];
+if (!theForm) {
+    theForm = document.Form;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=d8IG0rNDB-ptDXI2KPZo7_Q3oI6aR04rP1_CadvjeKyPqb_7UBPhnVmFJ3VEP50En1obXKLYePkH1Sqv0&amp;t=635792837982061497" type="text/javascript"></script>
+
+
+<script src="/DesktopModules/DNNGo_xPlugin/Resource/js/accordion.js?cdv=459" type="text/javascript"></script>
+<script src="/DesktopModules/DNNGo_xPlugin/Resource/js/dnngo-megamenu.js?cdv=459" type="text/javascript"></script>
+<script src="/Telerik.Web.UI.WebResource.axd?_TSM_HiddenField_=ScriptManager_TSM&amp;compress=1&amp;_TSM_CombinedScripts_=%3b%3bSystem.Web.Extensions%2c+Version%3d4.0.0.0%2c+Culture%3dneutral%2c+PublicKeyToken%3d31bf3856ad364e35%3aen-US%3a93a6b8ed-f453-4cc5-9080-8017894b33b0%3aea597d4b%3ab25378d2" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="uUfv1nhH2nBC4H/niknpPZA/rKK7G2ky58UUj6/cDqwGvA3KjzZeduQTJiLxAHXILTrqTKHFi2lV5BKfW3snluvZ/LuX27I8nlMIUsd5KNR1yvsQdkyCdmAhVd09W/4vS7f6UXgFmHtOx2YNoQnBWo5gHJgkWTzbxSj8PjtA1MCjPmwy5qm2ojVDiC7iqMUjog901hDudL3SyscfyUtuzJSU8IXrSl623RvREg==" />
+</div><script src="/Resources/Shared/Scripts/knockout.js?cdv=459" type="text/javascript"></script><script src="/Resources/Shared/Scripts/bootstrap.min.js?cdv=459" type="text/javascript"></script><script src="/js/dnn.js?cdv=459" type="text/javascript"></script><script src="/js/dnn.modalpopup.js?cdv=459" type="text/javascript"></script><script src="/js/dnn.servicesframework.js?cdv=459" type="text/javascript"></script><script src="/Resources/Search/SearchSkinObjectPreview.js?cdv=459" type="text/javascript"></script><script src="/Portals/_default/Skins/20066-UnlimitedColorsPack-048/scripts/pace.min.js?cdv=459" type="text/javascript"></script><script src="/js/dnncore.js?cdv=459" type="text/javascript"></script><script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager', 'Form', [], [], [], 90, '');
+//]]>
+</script>
+
+        
+        
+        
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Orbitron:400,900' rel='stylesheet' type='text/css'>
+
+
+
+    <!--CDF(Javascript|/Portals/_default/Skins/20066-UnlimitedColorsPack-048/scripts/pace.min.js?cdv=459)-->
+    <div class="pace_bg"></div>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<div class="body_bg" > 
+      <div class="mobile_top visible-xs">
+    <div class="dnn_layout">
+      <div class="head_mid  clearfix">
+        <div class="mobile_tabs Login  ">
+          
+
+          <span class="sep">|</span>
+          
+<div id="dnn_dnnLogin2_loginGroup" class="loginGroup">
+    <a id="dnn_dnnLogin2_enhancedLoginLink" title="Login" class="LoginLink" rel="nofollow" onclick="return dnnModal.show(&#39;http://www.uspa.org/Login?returnurl=/Drop-Zone-Locator?location=1165&amp;popUp=true&#39;,/*showReturn*/true,300,650,true,&#39;&#39;)" href="http://www.uspa.org/Login?returnurl=%2fDrop-Zone-Locator%3flocation%3d1165">Login</a>
+</div>
+        </div>
+        <div class="mobile_tabs searchBox  " id="search2">
+          <span id="dnn_dnnSEARCH3_ClassicSearch">
+    
+    
+    <span class="searchInputContainer" data-moreresults="See More Results" data-noresult="No Results Found">
+        <input name="dnn$dnnSEARCH3$txtSearch" type="text" maxlength="255" size="20" id="dnn_dnnSEARCH3_txtSearch" class="NormalTextBox" autocomplete="off" placeholder="Search..." />
+        <a class="dnnSearchBoxClearText"></a>
+    </span>
+    <a id="dnn_dnnSEARCH3_cmdSearch" class="search" href="javascript:__doPostBack(&#39;dnn$dnnSEARCH3$cmdSearch&#39;,&#39;&#39;)"> </a>
+</span>
+
+
+<script type="text/javascript">
+    $(function() {
+        if (typeof dnn != "undefined" && typeof dnn.searchSkinObject != "undefined") {
+            var searchSkinObject = new dnn.searchSkinObject({
+                delayTriggerAutoSearch : 400,
+                minCharRequiredTriggerAutoSearch : 2,
+                searchType: 'S',
+                enableWildSearch: true,
+                cultureCode: 'en-US',
+                portalId: -1
+                }
+            );
+            searchSkinObject.init();
+            
+            
+            // attach classic search
+            var siteBtn = $('#dnn_dnnSEARCH3_SiteRadioButton');
+            var webBtn = $('#dnn_dnnSEARCH3_WebRadioButton');
+            var clickHandler = function() {
+                if (siteBtn.is(':checked')) searchSkinObject.settings.searchType = 'S';
+                else searchSkinObject.settings.searchType = 'W';
+            };
+            siteBtn.on('change', clickHandler);
+            webBtn.on('change', clickHandler);
+            
+            
+        }
+    });
+</script>
+
+        </div>
+        <div class="mobile_tabs languageBox  ">
+          <div class="language-object" >
+
+
+</div>
+        </div>
+        <div class="mobile_tabs mobile_menu" >
+          <div class="tabs_close"></div>
+          <div id="mobile_menu">
+            
+<div class="menu_main">
+  <div id="multi_menub823206dd4" class="multi_menu">
+<ul  id="gomenub823206dd4" class="dropdown "><li class=" Item-1 "><a href="http://www.uspa.org/" class="menuitem " title="Home" ><span>Home</span></a></li><li class=" Item-2 dir"><a href="javascript:;" class="menuitem " title="Make A Skydive" ><span class='menu_arrow arrow_opened'>+</span><span>Make A Skydive</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/Make-A-Skydive/Choose-a-Method"  title="Choose a Method" ><span>Choose a Method</span></a></li><li class=" SunItem-2 dir"><a href="javascript:;"  title="Your First Jump" ><span class='menu_arrow arrow_opened'>+</span><span>Your First Jump</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/Make-A-Skydive/Your-First-Jump/Before-Your-Jump"  title="Before Your Jump" ><span>Before Your Jump</span></a></li><li class=" SunItem-2 "><a href="http://www.uspa.org/Make-A-Skydive/Your-First-Jump/During-Your-Jump"  title="During Your Jump" ><span>During Your Jump</span></a></li><li class=" SunItem-3 "><a href="http://www.uspa.org/Make-A-Skydive/Your-First-Jump/After-Your-Jump"  title="After Your Jump" ><span>After Your Jump</span></a></li></ul></li><li class=" SunItem-3 "><a href="http://www.uspa.org/Make-A-Skydive/Choose-a-School"  title="Choose a School" ><span>Choose a School</span></a></li></ul></li><li class=" Item-3 dir"><a href="javascript:;" class="menuitem " title="News & Events" ><span class='menu_arrow arrow_opened'>+</span><span>News & Events</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/News-Events/News"  title="News" ><span>News</span></a></li><li class=" SunItem-2 dir"><a href="http://www.uspa.org/News-Events/Events-Calendar"  title="Events Calendar" ><span class='menu_arrow arrow_opened'>+</span><span>Events Calendar</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/News-Events/Events-Calendar/Form"  title="Submit an Event" ><span>Submit an Event</span></a></li><li class=" SunItem-2 "><a href="http://www.uspa.org/News-Events/Events-Calendar/Instructional-Courses-Submission"  title="Submit an Instructional Course" ><span>Submit an Instructional Course</span></a></li><li class=" SunItem-3 "><a href="http://www.uspa.org/News-Events/Events-Calendar/Judge-Courses-Submission"  title="Submit a Judge Course" ><span>Submit a Judge Course</span></a></li></ul></li><li class=" SunItem-3 dir"><a href="http://www.uspa.org/News-Events/Stolen-Gear"  title="Stolen Gear" ><span class='menu_arrow arrow_opened'>+</span><span>Stolen Gear</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/News-Events/Stolen-Gear/Submit"  title="Submit" ><span>Submit</span></a></li></ul></li></ul></li><li class=" Item-4 dir"><a href="javascript:;" class="menuitem " title="Safety & Training" ><span class='menu_arrow arrow_opened'>+</span><span>Safety & Training</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/Safety-Training/Licenses"  title="Licenses" ><span>Licenses</span></a></li><li class=" SunItem-2 "><a href="http://www.uspa.org/Safety-Training/Waiver-Requests"  title="Waiver Requests" ><span>Waiver Requests</span></a></li><li class=" SunItem-3 dir"><a href="http://www.uspa.org/Safety-Training/Accident-Reports"  title="Accident Reports" ><span class='menu_arrow arrow_opened'>+</span><span>Accident Reports</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/Safety-Training/Accident-Reports/Submit-Online"  title="Submit Online" ><span>Submit Online</span></a></li></ul></li><li class=" SunItem-4 dir"><a href="http://www.uspa.org/Safety-Training/Ratings"  title="Ratings" ><span class='menu_arrow arrow_opened'>+</span><span>Ratings</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/Locator"  title="Find an Examiner" ><span>Find an Examiner</span></a></li></ul></li><li class=" SunItem-5 "><a href="http://www.uspa.org/Safety-Training/Demo-Jumps"  title="Demo Jumps" ><span>Demo Jumps</span></a></li><li class=" SunItem-6 dir"><a href="http://www.uspa.org/Safety-Training/Safety-Training-Advisors"  title="Safety & Training Advisors" ><span class='menu_arrow arrow_opened'>+</span><span>Safety & Training Advisors</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/Locator"  title="Find an S&TA" ><span>Find an S&TA</span></a></li></ul></li><li class=" SunItem-7 "><a href="http://www.uspa.org/Safety-Training/Safety-Day"  title="Safety Day" ><span>Safety Day</span></a></li><li class=" SunItem-8 "><a href="http://www.uspa.org/Safety-Training/SIM"  title="SIM" ><span>SIM</span></a></li></ul></li><li class=" Item-5 dir"><a href="javascript:;" class="menuitem " title="FAA & USPA" ><span class='menu_arrow arrow_opened'>+</span><span>FAA & USPA</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/FAA-USPA/Overview"  title="Overview" ><span>Overview</span></a></li><li class=" SunItem-2 "><a href="http://www.uspa.org/FAA-USPA/FARs"  title="FARs" ><span>FARs</span></a></li><li class=" SunItem-3 "><a href="http://www.uspa.org/FAA-USPA/Advisory-Circulars"  title="Advisory Circulars" ><span>Advisory Circulars</span></a></li><li class=" SunItem-4 "><a href="http://www.uspa.org/FAA-USPA/FAA-Interpretations"  title="FAA Interpretations" ><span>FAA Interpretations</span></a></li><li class=" SunItem-5 "><a href="http://www.uspa.org/FAA-USPA/FAA-Guidance"  title="FAA Guidance" ><span>FAA Guidance</span></a></li><li class=" SunItem-6 "><a href="http://www.uspa.org/FAA-USPA/Airport-Access"  title="Airport Access" ><span>Airport Access</span></a></li><li class=" SunItem-7 "><a href="http://www.uspa.org/FAA-USPA/ATC-Notification-Authorization"  title="ATC Notification / Authorization" ><span>ATC Notification / Authorization</span></a></li><li class=" SunItem-8 "><a href="http://www.uspa.org/FAA-USPA/Aircraft-Modifications"  title="Aircraft Modifications" ><span>Aircraft Modifications</span></a></li><li class=" SunItem-9 "><a href="http://www.uspa.org/FAA-USPA/DZO-and-Pilot-Resources"  title="DZO and Pilot Resources" ><span>DZO and Pilot Resources</span></a></li></ul></li><li class=" Item-6 dir"><a href="javascript:;" class="menuitem " title="About USPA" ><span class='menu_arrow arrow_opened'>+</span><span>About USPA</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/About-USPA/Board-of-Directors"  title="Board of Directors" ><span>Board of Directors</span></a></li><li class=" SunItem-2 "><a href="http://www.uspa.org/About-USPA/Staff-Directory"  title="Staff Directory" ><span>Staff Directory</span></a></li><li class=" SunItem-3 "><a href="http://www.uspa.org/About-USPA/about-us"  title="About Us" ><span>About Us</span></a></li><li class=" SunItem-4 "><a href="http://www.uspa.org/About-USPA/Employment"  title="Employment" ><span>Employment</span></a></li><li class=" SunItem-5 "><a href="http://www.uspa.org/Downloads"  title="Downloads" ><span>Downloads</span></a></li></ul></li><li class=" Item-7 dir"><a href="javascript:;" class="menuitem " title="Facts/FAQs" ><span class='menu_arrow arrow_opened'>+</span><span>Facts/FAQs</span></a><ul><li class=" SunItem-1 "><a href="http://www.uspa.org/facts-faqs/demographics"  title="Demographics" ><span>Demographics</span></a></li><li class=" SunItem-2 "><a href="http://www.uspa.org/facts-faqs/disciplines"  title="Disciplines" ><span>Disciplines</span></a></li><li class=" SunItem-3 "><a href="http://www.uspa.org/facts-faqs/equipment"  title="Equipment" ><span>Equipment</span></a></li><li class=" SunItem-4 "><a href="http://www.uspa.org/facts-faqs/faqs"  title="FAQs" ><span>FAQs</span></a></li><li class=" SunItem-5 "><a href="http://www.uspa.org/facts-faqs/safety"  title="Safety" ><span>Safety</span></a></li></ul></li></ul>
+   </div>
+</div>
+
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#multi_menub823206dd4").accordionpromulti({
+            accordion: true,
+            speed: 300,
+            closedSign: '+',
+            openedSign: '-'
+        });
+    }); 
+</script>
+
+          </div>
+        </div>
+        <div class="tabs_close"></div>
+      </div>
+    </div>
+  </div>
+  <div id="dnn_wrapper">
+  
+    <header class="header_bg >                   <div class="header_top  hidden-xs">
+        <div class="topbar clearfix">
+      <div class="container">
+        <div class="row">
+          <div class="clearfix col-sm-12">
+		  
+		    <div class="row toprow">
+		      <div id="dnn_HeaderPane1a" class="HeaderPane1 col-sm-2 topboxes"><div class="DnnModule DnnModule-DNN_HTML DnnModule-523"><a name="523"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr523_ContentPane" class="contentpane"><!-- Start_Module_523 --><div class="topbox">
+<div class="goto"><em>Go to&nbsp;
+</div>
+<div class="goto arrow"><span class="arrow glyphicon glyphicon-arrow-right"></span></em></div><div id="dnn_ctr523_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr523_HtmlModule_lblContent" class="Normal">
+	<p class="uspa">USPA</p>
+</div>
+
+</div></div><!-- End_Module_523 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+		      <div id="dnn_HeaderPane1b" class="HeaderPane1 col-sm-2 topboxes"><div class="DnnModule DnnModule-DNN_HTML DnnModule-525"><a name="525"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr525_ContentPane" class="contentpane"><!-- Start_Module_525 --><div class="topbox"><div id="dnn_ctr525_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr525_HtmlModule_lblContent" class="Normal">
+	<p><a class="hyper" href="http://competition.uspa.org/">Competition</a></p>
+</div>
+
+</div></div><!-- End_Module_525 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+		      <div id="dnn_HeaderPane1c" class="HeaderPane1 col-sm-2 topboxes DNNEmptyPane"></div>
+		      <div id="dnn_HeaderPane1d" class="HeaderPane1 col-sm-2 topboxes"><div class="DnnModule DnnModule-DNN_HTML DnnModule-529"><a name="529"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr529_ContentPane" class="contentpane"><!-- Start_Module_529 --><div class="topbox"><div id="dnn_ctr529_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr529_HtmlModule_lblContent" class="Normal">
+	<p><a class="hyper" href="http://membership.uspa.org">Membership</a></p>
+</div>
+
+</div></div><!-- End_Module_529 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+			  <div id="dnn_HeaderPane1e" class="HeaderPane1 col-sm-2 topboxes"><div class="DnnModule DnnModule-DNN_HTML DnnModule-531"><a name="531"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr531_ContentPane" class="contentpane"><!-- Start_Module_531 --><div class="topbox"><div id="dnn_ctr531_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr531_HtmlModule_lblContent" class="Normal">
+	<p><a class="hyper" href="http://www.parachutistonline.com/" target="_blank">Parachutist</a></p>
+</div>
+
+</div></div><!-- End_Module_531 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+		      <div id="dnn_HeaderPane1f" class="HeaderPane1 col-sm-2 topboxes"><div class="DnnModule DnnModule-DNN_HTML DnnModule-533"><a name="533"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr533_ContentPane" class="contentpane"><!-- Start_Module_533 --><div class="topbox"><div id="dnn_ctr533_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr533_HtmlModule_lblContent" class="Normal">
+	<p><a class="hyper" href="http://store.uspa.org/" target="_blank">Store</a></p>
+</div>
+
+</div></div><!-- End_Module_533 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+		     </div>
+            
+          </div>
+	     
+        </div>
+      </div>
+  </div>
+      <div class="hidden-xs"  id="header3">
+        <div class="dnn_layout">
+          <div class="head_mid  clearfix">
+            <div class="dnn_logo  col-sm-5">
+              <a id="dnn_dnnLOGO_hypLogo" title="United States Parachute Association" href="http://www.uspa.org/"><img id="dnn_dnnLOGO_imgLogo" src="/Portals/0/Images/header_bg.png?ver=2015-06-15-130901-813" alt="United States Parachute Association" style="border-width:0px;" /></a>
+            </div>
+            <div id="dnn_HeaderPaneB" class="HeaderPaneB  col-sm-7"><div class="DnnModule DnnModule-DNN_HTML DnnModule-534"><a name="534"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr534_ContentPane" class="contentpane"><!-- Start_Module_534 --><div id="dnn_ctr534_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr534_HtmlModule_lblContent" class="Normal">
+	<div class="top-social"> <a href="https://www.linkedin.com/company/u.s.-parachute-association-uspa-" target="_blank"><span class="social social-linked-in"></span></a> <a href="https://www.facebook.com/SkydiveUSPA" target="_blank"><span class="social social-facebook"></span></a> <a href="https://twitter.com/skydiveuspa" target="_blank"><span class="social social-twitter"></span></a> <a href="https://plus.google.com/101143330918192399997" target="_blank"><span class="social social-google-plus"></span></a>  <a href="https://www.youtube.com/user/SkydiveUSPA" target="_blank"><span class="social social-youtube" style="padding-left: 1px;"></span></a>  </div>
+</div>
+
+</div><!-- End_Module_534 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-535"><a name="535"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr535_ContentPane" class="contentpane"><!-- Start_Module_535 --><div id="dnn_ctr535_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr535_HtmlModule_lblContent" class="Normal">
+	<a target="_blank" style="margin-left: 3px;" class="btn btn-default bannerbutton" href="/Donations">Donate</a><a href="https://uspa.ps.membersuite.com/profile/CreateAccount_BasicInfo.aspx" target="_blank" class="btn btn-default bannerbutton">Join | Renew | Login </a>
+</div>
+
+</div><!-- End_Module_535 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+          </div>
+        </div>
+	  </div>
+	 <div class="full roll_menu  hidden-xs"> 
+        
+        <div class="dnn_layout">
+          <div class="head_mid  clearfix">
+            <nav class="nav_box clearfix">
+              <div class="roll_logo  ">
+                <a id="dnn_roll_dnnLOGO_hypLogo" title="United States Parachute Association" href="http://www.uspa.org/"><img id="dnn_roll_dnnLOGO_imgLogo" src="/Portals/0/Images/header_bg.png?ver=2015-06-15-130901-813" alt="United States Parachute Association" style="border-width:0px;" /></a>
+              </div>
+              <div class="dnn_menu">
+                <div id="dnngo_megamenu">
+                  
+    <div class="dnngo_gomenu" id="dnngo_megamenu67e3a98529">
+      
+         <ul class="primary_structure">
+ <li class=" ">
+<a href="http://www.uspa.org/"  title="Home" ><span>Home</span></a>
+</li>
+ <li class="dir ">
+<a href="javascript:;"  title="Make A Skydive" ><span>Make A Skydive</span></a>
+<div class="dnngo_menuslide">
+<div class="dnngo_boxslide">
+<div class="menu_centerbox" style="width:50%;">
+<div class="dnngo_masonrymenu">
+<ul style="width:50%"><li>
+<a href="http://www.uspa.org/Make-A-Skydive/Choose-a-Method"  title="Choose a Method" ><span>Choose a Method</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/Make-A-Skydive/Choose-a-School"  title="Choose a School" ><span>Choose a School</span></a>
+</li>
+</ul><ul style="width:50%"><li>
+<a href="javascript:;"  title="Your First Jump" ><span>Your First Jump</span></a>
+<ul><li><a href="http://www.uspa.org/Make-A-Skydive/Your-First-Jump/Before-Your-Jump"  title="Before Your Jump" ><span>Before Your Jump</span></a></li><li><a href="http://www.uspa.org/Make-A-Skydive/Your-First-Jump/During-Your-Jump"  title="During Your Jump" ><span>During Your Jump</span></a></li><li><a href="http://www.uspa.org/Make-A-Skydive/Your-First-Jump/After-Your-Jump"  title="After Your Jump" ><span>After Your Jump</span></a></li></ul></li>
+</ul>
+</div>
+</div>
+<div class="menu_rightbox" style="width:50%;">
+<h2 class="mega_title">More</h2>
+<p><a class="megali" href="/Make-A-Skydive/Beyond-the-First-Jump-Intro">Beyond the First Jump</a><br /><a class="megali" href="/Make-A-Skydive/Beyond-Your-A-License"">Beyond Your A License</a><br /><a class="megali" href="http://membership.uspa.org/USPA-Programs/Sisters-In-Skydiving">Sisters in Skydiving</a></p>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</li>
+ <li class="dir ">
+<a href="javascript:;"  title="News & Events" ><span>News & Events</span></a>
+<div class="dnngo_menuslide">
+<div class="dnngo_boxslide">
+<div class="menu_leftbox" style="width:40%;">
+<h2 class="mega_title">Featured Events</h2>
+<div class="Black">
+	<p class="newstitle" style="color: #dcdcdc; font-weight: normal;">
+           <a  class="featuredlink" href='http://www.uspa.org/News-Events/Events-Calendar/View-Article/Article/1361/CA-The-Winter-2016-USPA-Board-of-Directors-Meeting'  >2/26/16 - (CA) The Winter 2016 USPA Board of Directors Meeting</a>
+</p><p class="newstitle" style="color: #dcdcdc; font-weight: normal;">
+           <a  class="featuredlink" href='http://www.uspa.org/News-Events/Events-Calendar/View-Article/Article/1526/World-USPA-Safety-Day-2016'  >3/12/16 - (World) USPA Safety Day 2016</a>
+</p><p class="newstitle" style="color: #dcdcdc; font-weight: normal;">
+           <a  class="featuredlink" href='http://www.uspa.org/News-Events/Events-Calendar/View-Article/Article/1319/FL-POPS-Spring-Fest'  >3/16/16 - (FL) POPS Spring Fest</a>
+</p>
+</div>
+</div>
+<div class="menu_centerbox" style="width:20%;">
+<div class="dnngo_masonrymenu">
+<ul style="width:100%"><li>
+<a href="http://www.uspa.org/News-Events/News"  title="News" ><span>News</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/News-Events/Events-Calendar"  title="Events Calendar" ><span>Events Calendar</span></a>
+<ul><li><a href="http://www.uspa.org/News-Events/Events-Calendar/Form"  title="Submit an Event" ><span>Submit an Event</span></a></li><li><a href="http://www.uspa.org/News-Events/Events-Calendar/Instructional-Courses-Submission"  title="Submit an Instructional Course" ><span>Submit an Instructional Course</span></a></li><li><a href="http://www.uspa.org/News-Events/Events-Calendar/Judge-Courses-Submission"  title="Submit a Judge Course" ><span>Submit a Judge Course</span></a></li></ul></li>
+<li>
+<a href="http://www.uspa.org/News-Events/Stolen-Gear"  title="Stolen Gear" ><span>Stolen Gear</span></a>
+<ul><li><a href="http://www.uspa.org/News-Events/Stolen-Gear/Submit"  title="Submit" ><span>Submit</span></a></li></ul></li>
+</ul>
+</div>
+</div>
+<div class="menu_rightbox" style="width:40%;">
+<h2 class="mega_title">Featured News</h2>
+<div class="Green">
+	<p class="newstitle" style="color: #dcdcdc; font-weight: normal;">
+                <a  class="featuredlink" href='http://www.uspa.org/News-Events/News/View-Article/Article/1486/Collegiate-Competitors-Shine-in-Sunny-Florida'  >Collegiate Competitors Shine in Sunny Florida!</a>
+</p><p class="newstitle" style="color: #dcdcdc; font-weight: normal;">
+                <a  class="featuredlink" href='http://www.uspa.org/News-Events/News/View-Article/Article/1461/USPA-Announces-Board-Election-Results'  >USPA Announces Board Election Results</a>
+</p><p class="newstitle" style="color: #dcdcdc; font-weight: normal;">
+                <a  class="featuredlink" href='http://www.uspa.org/News-Events/News/View-Article/Article/1364/Nationals-Is-a-Wrap'  >Nationals Is a Wrap!</a>
+</p>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</li>
+ <li class="dir ">
+<a href="javascript:;"  title="Safety & Training" ><span>Safety & Training</span></a>
+<div class="dnngo_menuslide">
+<div class="dnngo_boxslide">
+<div class="menu_centerbox" style="width:50%;">
+<div class="dnngo_masonrymenu">
+<ul style="width:33%"><li>
+<a href="http://www.uspa.org/Safety-Training/Licenses"  title="Licenses" ><span>Licenses</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/Safety-Training/Ratings"  title="Ratings" ><span>Ratings</span></a>
+<ul><li><a href="http://www.uspa.org/Locator"  title="Find an Examiner" ><span>Find an Examiner</span></a></li></ul></li>
+<li>
+<a href="http://www.uspa.org/Safety-Training/Safety-Day"  title="Safety Day" ><span>Safety Day</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/Safety-Training/Waiver-Requests"  title="Waiver Requests" ><span>Waiver Requests</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/Safety-Training/Demo-Jumps"  title="Demo Jumps" ><span>Demo Jumps</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/Safety-Training/SIM"  title="SIM" ><span>SIM</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/Safety-Training/Accident-Reports"  title="Accident Reports" ><span>Accident Reports</span></a>
+<ul><li><a href="http://www.uspa.org/Safety-Training/Accident-Reports/Submit-Online"  title="Submit Online" ><span>Submit Online</span></a></li></ul></li>
+<li>
+<a href="http://www.uspa.org/Safety-Training/Safety-Training-Advisors"  title="Safety & Training Advisors" ><span>Safety & Training Advisors</span></a>
+<ul><li><a href="http://www.uspa.org/Locator"  title="Find an S&TA" ><span>Find an S&TA</span></a></li></ul></li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</li>
+ <li class="dir ">
+<a href="javascript:;"  title="FAA & USPA" ><span>FAA & USPA</span></a>
+<div class="dnngo_menuslide">
+<div class="dnngo_boxslide">
+<div class="menu_centerbox" style="width:50%;">
+<div class="dnngo_masonrymenu">
+<ul style="width:33%"><li>
+<a href="http://www.uspa.org/FAA-USPA/Overview"  title="Overview" ><span>Overview</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/FAA-USPA/FAA-Interpretations"  title="FAA Interpretations" ><span>FAA Interpretations</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/FAA-USPA/ATC-Notification-Authorization"  title="ATC Notification / Authorization" ><span>ATC Notification / Authorization</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/FAA-USPA/FARs"  title="FARs" ><span>FARs</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/FAA-USPA/FAA-Guidance"  title="FAA Guidance" ><span>FAA Guidance</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/FAA-USPA/Aircraft-Modifications"  title="Aircraft Modifications" ><span>Aircraft Modifications</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/FAA-USPA/Advisory-Circulars"  title="Advisory Circulars" ><span>Advisory Circulars</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/FAA-USPA/Airport-Access"  title="Airport Access" ><span>Airport Access</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/FAA-USPA/DZO-and-Pilot-Resources"  title="DZO and Pilot Resources" ><span>DZO and Pilot Resources</span></a>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</li>
+ <li class="dir ">
+<a href="javascript:;"  title="About USPA" ><span>About USPA</span></a>
+<div class="dnngo_menuslide">
+<div class="dnngo_boxslide">
+<div class="menu_centerbox" style="width:50%;">
+<div class="dnngo_masonrymenu">
+<ul style="width:33%"><li>
+<a href="http://www.uspa.org/About-USPA/Board-of-Directors"  title="Board of Directors" ><span>Board of Directors</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/About-USPA/Employment"  title="Employment" ><span>Employment</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/About-USPA/Staff-Directory"  title="Staff Directory" ><span>Staff Directory</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/Downloads"  title="Downloads" ><span>Downloads</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/About-USPA/about-us"  title="About Us" ><span>About Us</span></a>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</li>
+ <li class="dir ">
+<a href="javascript:;"  title="Facts/FAQs" ><span>Facts/FAQs</span></a>
+<div class="dnngo_menuslide">
+<div class="dnngo_boxslide">
+<div class="menu_centerbox" style="width:50%;">
+<div class="dnngo_masonrymenu">
+<ul style="width:33%"><li>
+<a href="http://www.uspa.org/facts-faqs/demographics"  title="Demographics" ><span>Demographics</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/facts-faqs/faqs"  title="FAQs" ><span>FAQs</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/facts-faqs/disciplines"  title="Disciplines" ><span>Disciplines</span></a>
+</li>
+<li>
+<a href="http://www.uspa.org/facts-faqs/safety"  title="Safety" ><span>Safety</span></a>
+</li>
+</ul><ul style="width:33%"><li>
+<a href="http://www.uspa.org/facts-faqs/equipment"  title="Equipment" ><span>Equipment</span></a>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("#dnngo_megamenu67e3a98529").dnngomegamenu({
+            slide_speed: 200,
+            delay_disappear: 500,
+            popUp: "vertical"//level
+        });
+    });
+
+
+	jQuery(document).ready(function () {
+		jQuery("#dnngo_megamenu67e3a98529").has("ul").find(".dir > a").attr("aria-haspopup", "true");
+	}); 
+
+</script>
+                </div>
+              </div>
+              <div class="search_ico  "><span class="glyphicons glyph-search"></span></div>
+              <div class="searchBox  " id="search">
+                <span id="dnn_dnnSEARCH_ClassicSearch">
+    
+    
+    <span class="searchInputContainer" data-moreresults="See More Results" data-noresult="No Results Found">
+        <input name="dnn$dnnSEARCH$txtSearch" type="text" maxlength="255" size="20" id="dnn_dnnSEARCH_txtSearch" class="NormalTextBox" autocomplete="off" placeholder="Search..." />
+        <a class="dnnSearchBoxClearText"></a>
+    </span>
+    <a id="dnn_dnnSEARCH_cmdSearch" class="search" href="javascript:__doPostBack(&#39;dnn$dnnSEARCH$cmdSearch&#39;,&#39;&#39;)"> </a>
+</span>
+
+
+<script type="text/javascript">
+    $(function() {
+        if (typeof dnn != "undefined" && typeof dnn.searchSkinObject != "undefined") {
+            var searchSkinObject = new dnn.searchSkinObject({
+                delayTriggerAutoSearch : 400,
+                minCharRequiredTriggerAutoSearch : 2,
+                searchType: 'S',
+                enableWildSearch: true,
+                cultureCode: 'en-US',
+                portalId: -1
+                }
+            );
+            searchSkinObject.init();
+            
+            
+            // attach classic search
+            var siteBtn = $('#dnn_dnnSEARCH_SiteRadioButton');
+            var webBtn = $('#dnn_dnnSEARCH_WebRadioButton');
+            var clickHandler = function() {
+                if (siteBtn.is(':checked')) searchSkinObject.settings.searchType = 'S';
+                else searchSkinObject.settings.searchType = 'W';
+            };
+            siteBtn.on('change', clickHandler);
+            webBtn.on('change', clickHandler);
+            
+            
+        }
+    });
+</script>
+
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+	  </div>
+                        	      <div class="visible-xs mobile_header">
+        <div class="dnn_layout">
+          <div class="head_mid clearfix">
+            <div class="mobile_dnn_logo  ">
+              <a id="dnn_dnnLOGOphone_hypLogo" title="United States Parachute Association" href="http://www.uspa.org/"><img id="dnn_dnnLOGOphone_imgLogo" src="/Portals/0/Images/header_bg.png?ver=2015-06-15-130901-813" alt="United States Parachute Association" style="border-width:0px;" /></a>
+            </div>
+            <div class="mobile_icon"> <a href="#" class=" "><span class="glyphicons glyph-user"></span></a> <a href="#" class=" "><span class="glyphicons glyph-search"></span></a> <a href="#" class=" "><span class="glyphicons glyph-globe-af"></span></a> <a href="#"><span class="glyphicons glyph-list"></span></a> </div>
+            <div class="HeaderBottom clearfix">
+              
+              <div class="HeaderPaneB_mobile" style="padding-top: 10px; padding-bottom: 10px;">
+			  <a target="_blank" style="margin-left: 3px; " class="btn btn-default bannerbutton donate" href="/Donations">Donate</a>
+			  <a href="https://uspa.ps.membersuite.com/profile/CreateAccount_BasicInfo.aspx" style="margin-right: 0px;" target="_blank" class="btn btn-default bannerbutton">Join | Renew | Login </a>
+			  <div class="top-social" style="display: block; float: right;  width: 190px;"> <a href="https://www.linkedin.com/company/u.s.-parachute-association-uspa-" target="_blank"><span class="social social-linked-in"></span></a> <a href="https://www.facebook.com/SkydiveUSPA" target="_blank"><span class="social social-facebook"></span></a> <a href="https://twitter.com/skydiveuspa" target="_blank"><span class="social social-twitter"></span></a> <a href="https://plus.google.com/101143330918192399997" target="_blank"><span class="social social-google-plus"></span></a>  <a href="https://www.youtube.com/user/SkydiveUSPA" target="_blank"><span class="social social-youtube" style="padding-left: 1px;"></span></a>  </div>
+			  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+   
+    <section id="dnn_content">
+      <div id="dnn_Full_Screen_PaneA" class="Full_Screen_PaneA DNNEmptyPane"></div>
+      <div class="dnn_layout">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+            <div class="row">
+              <div class="col-sm-12">
+                <div id="dnn_TopPane" class="TopPane DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dnn_Full_Screen_PaneB" class="Full_Screen_PaneB DNNEmptyPane"></div>
+      <div class="dnn_layout startcontent">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+            <div class="row">
+              <div class="col-sm-3">
+                <div id="dnn_RowOne_Grid3_Pane" class="RowOne_Grid3_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-9">
+                <div id="dnn_RowOne_Grid9_Pane" class="RowOne_Grid9_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div id="dnn_RowTwo_Grid4_Pane" class="RowTwo_Grid4_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-8">
+                <div id="dnn_RowTwo_Grid8_Pane" class="RowTwo_Grid8_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div id="dnn_RowThree_Grid5_Pane" class="RowThree_Grid5_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-7">
+                <div id="dnn_RowThree_Grid7_Pane" class="RowThree_Grid7_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div id="dnn_RowFour_Grid6_Pane1" class="RowFour_Grid6_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-6">
+                <div id="dnn_RowFour_Grid6_Pane2" class="RowFour_Grid6_Pane2 DNNEmptyPane"></div>
+              </div>
+            </div>
+			
+            <div class="row">
+              <div class="col-sm-7">
+                <div id="dnn_RowFive_Grid7_Pane" class="RowFive_Grid7_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-5">
+                <div id="dnn_RowFive_Grid5_Pane" class="RowFive_Grid5_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div id="dnn_RowSix_Grid8_Pane" class="RowSix_Grid8_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-4">
+                <div id="dnn_RowSix_Grid4_Pane" class="RowSix_Grid4_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-9">
+                <div id="dnn_RowSeven_Grid9_Pane" class="RowSeven_Grid9_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-3">
+                <div id="dnn_RowSeven_Grid3_Pane" class="RowSeven_Grid3_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dnn_Full_Screen_PaneC" class="Full_Screen_PaneC DNNEmptyPane"></div>
+      <div class="dnn_layout">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+		  <div class="row">
+		      <div class="uspabuckets">
+                <div id="dnn_bucket1" class="bucket1 DNNEmptyPane"></div>
+              </div>
+			  <div class="uspabuckets">
+                <div id="dnn_bucket2" class="bucket2 DNNEmptyPane"></div>
+              </div>
+			  <div class="uspabuckets">
+                <div id="dnn_bucket3" class="bucket3 DNNEmptyPane"></div>
+              </div>
+			  <div class="uspabuckets">
+                <div id="dnn_bucket4" class="bucket4 DNNEmptyPane"></div>
+              </div>
+			  <div class="uspabuckets">
+                <div id="dnn_bucket5" class="bucket5 DNNEmptyPane"></div>
+              </div>
+		    </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div id="dnn_RowEight_Grid4_Pane1" class="RowEight_Grid4_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-4">
+                <div id="dnn_RowEight_Grid4_Pane2" class="RowEight_Grid4_Pane2 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-4">
+                <div id="dnn_RowEight_Grid4_Pane3" class="RowEight_Grid4_Pane3 DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <div id="dnn_RowNine_Grid3_Pane1" class="RowNine_Grid3_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-6">
+                <div id="dnn_RowNine_Grid6_Pane" class="RowNine_Grid6_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-3">
+                <div id="dnn_RowNine_Grid3_Pane2" class="RowNine_Grid3_Pane2 DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowTen_Grid3_Pane1" class="RowTen_Grid3_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowTen_Grid3_Pane2" class="RowTen_Grid3_Pane2 DNNEmptyPane"></div>
+              </div>
+              <div class="clearfix visible-sm"></div>
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowTen_Grid3_Pane3" class="RowTen_Grid3_Pane3 DNNEmptyPane"></div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowTen_Grid3_Pane4" class="RowTen_Grid3_Pane4 DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dnn_Full_Screen_PaneD" class="Full_Screen_PaneD DNNEmptyPane"></div>
+      <div class="dnn_layout">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+            <div class="row">
+              <div class="col-sm-12">
+                <div id="dnn_ContentPane" class="ContentPane"><div class="DnnModule DnnModule-DNN_HTML DnnModule-930"><a name="930"></a>
+<div class="Container001">
+	<div class="dnntitle titleicon">
+		<span id="dnn_ctr930_dnnTITLE1_titleLabel" class="title1">USPA Group Member and Foreign Affiliate Drop Zone Locator</span>
+
+
+
+	</div>
+	<div class="contentmain"> 
+		
+		<div id="dnn_ctr930_ContentPane" class="contentpane"><!-- Start_Module_930 --><div id="dnn_ctr930_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr930_HtmlModule_lblContent" class="Normal">
+	<p>USPA established the Group Member Program as a way for skydiving schools, clubs and centers to affiliate with USPA and uphold USPA&rsquo;s safety standards.
+</p>
+<p>Drop zones in the U.S. that affiliate are known as &ldquo;USPA Group Member&rdquo; DZs, and they pledge to comply with USPA&rsquo;s Basic Safety Requirements and to use current USPA instructors, provide USPA-required equipment, and use USPA-developed instruction methods. Group Members designated as &ldquo;Training Centers&rdquo; provide instruction, equipment and training to become a licensed skydiver.</p>
+<p>Drop zones in other countries are known as &ldquo;USPA Foreign Affiliate&rdquo; DZs, and they pledge to have at least one current USPA rated instructor on staff.
+</p>
+</div>
+
+</div><!-- End_Module_930 --></div>
+	</div>
+	<div class="c_footer">
+		
+		
+		
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="DnnModule DnnModule-SimplifyFindAMember DnnModule-690"><a name="690"></a><div id="dnn_ctr690_ContentPane"><!-- Start_Module_690 --><style>
+.findAMemberLeftBar .list-group .list-group{
+margin-bottom:3px;
+}
+</style><div id="dnn_ctr690_ModuleContent" class="DNNModuleContent ModSimplifyFindAMemberC">
+	<!--CDF(Javascript|/Resources/Shared/Scripts/bootstrap.min.js?cdv=459)-->
+<!--CDF(Css|/Resources/Shared/Scripts/bootstrap.min.css?cdv=459)-->
+<!--CDF(Javascript|/Resources/Shared/Scripts/knockout.js?cdv=459)-->
+<div class="row">
+    
+</div>
+<script type="text/html">
+    var states = 'AK, AZ';
+</script>
+<style>.form-inline { padding-top: 10px;}</style>
+
+
+
+
+
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="http://www.uspa.org/Drop-Zone-Locator/search/loc">New Search</a></li>
+                
+            </ol>
+        </div>
+        <style>
+.dropzone{color:#000;}
+.dropzone dt{color:#428bca}
+	/*.serviceSelected{padding-left:15px; background-image:url('/portals/0/dropzone/check.gif'); background-repeat:no-repeat;}*/
+	.serviceNotSelected{padding-left:14px; color:#cccccc}
+	.serviceSelected:before{ content:url('/portals/0/dropzone/check.gif');}
+</style>
+<div class="panel panel-primary dropzone">
+    <div class="panel-heading"><div class="panel-title">
+	<div class="row">
+		<div class="col-sm-8">
+		<h3>Illinois Valley Parachute Club</h3>
+		</div>
+		<div class="col-sm-4 pull-right"><div class="pull-right">
+		
+		
+		
+		
+		</div>
+		</div>
+		</div>
+		</div>
+	</div>
+    <div class="panel-body">
+	<div class="col-sm-12 col-md-5" >
+		<dl class="dl-horizontal">
+			<dt>Location:</dt>
+			<dd>
+				Illinois Valley Parachute Club Airport (81IL)<br/>
+				Dee-Mac Road and Rte 122<br/>
+					
+				Minier, IL 61759<br/>
+				30 miles W of Bloomington
+			</dd>
+			<dt>
+				LAT/LONG:
+			</dt>
+			<dd>
+				<a href="https://www.google.com/maps/place/40.4339062+-89.3561217/@40.4339062,-89.3561217,15z" target="_blank"> 40.4339062 : -89.3561217 </a>
+			</dd>
+			<dt>
+				Phone: 
+			</dt>
+			<dd>
+			<a href="tel: +(309) 392-2751">(309) 392-2751</a>
+			</dd>
+			
+			<dt>Email:</dt><dd><a href="mailto:info@ivpc.org">info@ivpc.org</a></dd>
+			<dt>Website:</dt><dd><a href="http://ivpc.org">http://ivpc.org</a></dd>
+			<dt>Aircraft:</dt>
+			<dd>1 Cessna 182</dd>
+			<dt>Additional Information:</dt>
+			<dd>Open weekends 10:00am until dark.  Tuesday and Thursday 4:00pm until dark during daylight saving.  From Bloomington take Rte 9 west to Rte 122 west.  Turn left just three miles west of Minier.  From Peoria take I-74 east to I-155 south to Rte 122 east.  Turn right three miles east of Hopedale on Mackinaw Road.</dd>
+		</dl>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-3" >
+		<dl class="amenities">
+			<dt>Training Offered</dt>
+			<dd class="serviceNotSelected">Accellerated Free Fall(AFF)</dd>
+			<dd class="serviceNotSelected">Instructer-Assisted Deployment(IAD)</dd>
+			<dd class="serviceSelected">Static-Line(SL)</dd>
+			<dd class="serviceNotSelected">Tandem</dd>
+			<dt>Services & Amenities</dt>
+			<dd class="serviceNotSelected">Bathhouse/Hot Showers</dd>
+			<dd class="serviceNotSelected">Bunkhouse w/ Beds</dd>
+			<dd class="serviceNotSelected">Camping Area</dd>
+			<dd class="serviceNotSelected">Equipment Rental/Sales</dd>
+			<dd class="serviceNotSelected">Full-Service Restaurant</dd>
+			<dd class="serviceNotSelected">Internet Access</dd>
+			<dd class="serviceNotSelected">Load Organizers</dd>
+			<dd class="serviceNotSelected">Packers</dd>
+			<dd class="serviceNotSelected">Rigger Service</dd>
+			<dd class="serviceNotSelected">RV Space w/ Electricity</dd>
+			<dd class="serviceNotSelected">Swimming Pool</dd>
+			<dd class="serviceNotSelected">Swoop Pond</dd>
+			<dd class="serviceNotSelected">Videographers</dd>
+		</dl>
+	</div>
+	
+	<div class="col-xs-12 col-sm-6 col-md-4" >
+		<dl>
+			<dt>Upcoming Events</dt>
+			
+<dt>Drop Zone Mentions</dt>
+			
+		</dl>
+		
+		
+		
+		
+	</div>
+	</div>
+    </div>
+
+
+
+<style>
+.DnnModule-930 .Normal{display:none;}
+</style>
+
+        
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Azwx_dEDCRSfujHb7omcVrLsb2Tgwbs"></script> 
+<style type="text/css">
+#map-canvas { height: 500px; margin: 0; padding: 0; }
+</style>
+
+<script>
+    //array of locations
+    var markers = [];
+    //array of google markers
+    var gmarkers = [];
+    //map object
+    var map;
+
+    var total;
+    var geocoder;
+    var bounds;
+
+    //Simplify Marker Object
+    function MapMarker(title,label,latitude,longitude,street,city,state,zip,index,icon,url,info) {
+        var self = this;
+        self.Title = title;
+        self.Label = label;
+        self.Latitude = latitude;
+        self.Longitude = longitude;
+        self.Index = index;
+        self.Icon = icon==undefined?'':icon;
+        self.Street = street==undefined?'':street;
+        self.City = city == undefined ? '' : city;
+        self.State = state==undefined?'':state;
+        self.Zip = zip == undefined ? '' : zip;
+        self.Url = url == undefined ? '' : url;
+        self.Info = info = undefined ? '' : info;
+    }
+</script>
+    
+
+    <script>/*array of locations to plot on the map, pulled out of simplify*/
+    
+       markers.push(new MapMarker('Illinois Valley Parachute Club',
+                                    'Illinois Valley Parachute Club',
+                                    '40.4339062',
+                                    '-89.3561217',
+                                    'Dee-Mac Road and Rte 122',
+                                    'Minier',
+                                    'IL',
+                                    '61759', 
+                                    0,
+                                    '/Portals/0/DZ-Pin.png',
+                                    '/Drop-Zone-Locator/?location=1165',
+                                    '<strong>Illinois Valley Parachute Club</strong><br/>Illinois Valley Parachute Club Airport (81IL)<br/>Dee-Mac Road and Rte 122<br/>Minier, IL 61759<br/>   '));
+    
+    </script>
+    
+
+    
+
+<script type="text/javascript">
+    
+    function initialize() {
+        
+        bounds = new google.maps.LatLngBounds();
+        geocoder = new google.maps.Geocoder();
+
+        var mapOptions = {zoom: 15};
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        
+        setMarkers(map, markers);
+       
+    }
+
+    var testedLocations = 0;
+    //go through each simplify marker and build the google map marker and plot it
+    function setMarkers(map,markers)
+    {
+        total = markers.length;
+        
+        for (var i=0; i < markers.length;i++)
+        {
+            var marker = markers[i];
+            
+            var latlng;
+            if(marker.Latitude==undefined || marker.Longitude==undefined || marker.Latitude=='' || marker.Longitude=='')
+            {
+                testedLocations++;
+                /*getCoords(marker.Street + " " + marker.City + " " + marker.State + " " + marker.Zip,
+                            function (latlng, title) { placeMarker(latlng, map, title); },
+                                function () {
+                                    getCoords(marker.City + " " + marker.State,
+                                        function (latlng, title) {
+                                            placeMarker(latlng, map, title);
+                                        }, function () {
+                                            getCoords(marker.state, function (latlng, title) {
+                                                placeMarker(latlng, map, title);
+                                            }, setBounds());
+                                        });
+                                }
+                    );*/
+                getCoords(marker, function (latlng, marker, title) {
+                    //$('#txtCoords').val($('#txtCoords').val() + marker.State + ' ' + latlng + '" });');
+
+                    placeMarker(latlng, map, title, marker.Url, marker.Info, marker.Icon);
+                }, setBounds());
+            }
+            else
+            {
+                latlng = new google.maps.LatLng(marker.Latitude, marker.Longitude);
+                testedLocations++;
+                placeMarker(latlng, map, marker.Title, marker.Url,marker.Info,marker.Icon);
+            }
+        }
+        
+    }
+
+    //plot a marker on the map
+    function placeMarker(latlng,map,title,url,info,icon)
+    {
+        var gmarker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            url:url
+        });
+
+        if (icon != undefined && icon != '')
+        {
+            gmarker.setIcon(icon);
+        }
+        if (url != undefined && url != '')
+            google.maps.event.addListener(gmarker, 'click', function () {
+                window.location.href = this.url;
+            });
+        if(info!=undefined && info!='') {
+
+            var infowindow = new google.maps.InfoWindow({ content: info });
+
+            google.maps.event.addListener(gmarker, 'mouseover',
+                function () {
+                    infowindow.open(map, gmarker);
+                    //toggleBounce(this);
+                });
+
+            google.maps.event.addListener(gmarker, 'mouseout',
+                function () {
+                    infowindow.close();
+                    
+                });
+
+        }
+
+        gmarkers.push(gmarker);
+        bounds.extend(gmarker.position);
+            
+        setBounds();
+
+    }
+
+    function setBounds()
+    {
+        if (testedLocations == markers.length) {
+            map.fitBounds(bounds);
+
+        
+
+        //    if (gmarkers.length == 1) {//map.setZoom(15);
+
+                var listener = google.maps.event.addListener(map, "idle", function () {
+                    if (map.getZoom() > 14) map.setZoom(14);
+                    google.maps.event.removeListener(listener);
+                });
+
+          //  }
+        }
+    }
+
+    //if we don't have lat and lng look up address
+    function getCoordsold(location, successCallback, failCallback) {
+        var returnLatlng;
+        geocoder.geocode({ 'address': location }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                returnLatlng = results[0].geometry.location;
+                
+                if (successCallback != undefined)
+                    successCallback(returnLatlng, location);
+            }
+            else if (failCallback != undefined)
+            {
+                failCallback();
+            }
+        });
+        
+        return returnLatlng;
+    }
+
+    function getCoords(location, successCallback,failCallback)
+    {//3 attempts to get coords, first with full address, second with city state, third just state
+        geocoder.geocode({ 'address': location.Street + " " + location.City + " " + location.State + " " + location.Zip }
+            , function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    successCallback(results[0].geometry.location,location, location.Street + ' ' + location.City + ' ' + location.State + ' ' + location.Zip);
+                }
+                else {
+                    geocoder.geocode({ 'address': location.City + ' ' + location.State }
+                       , function (results, status) {
+                           if (status == google.maps.GeocoderStatus.OK) {
+                               successCallback(results[0].geometry.location,location, location.City + ' ' + location.State);
+                           }
+                           else
+                           {
+                               geocoder.geocode({'address':location.State}, function (results, status) {
+                                   if (status == google.maps.GeocoderStatus.OK) {
+                                       successCallback(results[0].geometry.location,location, location.State);
+                                   }
+                                   else if (failCallback != undefined) {
+                                       failCallback();
+                                   }
+                               });
+                           }
+                       });
+
+                }
+            }
+            );
+    }
+
+    function toggleBounce(m) {
+
+        if (m.getAnimation() != null) {
+            m.setAnimation(null);
+        } else {
+            m.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    }
+
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+<div id="map-canvas"></div>
+
+
+
+    
+
+
+
+
+
+
+<script>
+
+    $(function () {
+        //$("#dnn_ctr690_View_ddlStates").val([]);
+        $('#dnn_ctr690_View_ddlStates option:first-child').attr("selected", "selected");
+    })
+</script>
+</div><!-- End_Module_690 --></div>
+</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dnn_Full_Screen_PaneE" class="Full_Screen_PaneE DNNEmptyPane"></div>
+     
+	  <div class="dnn_layout">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+            <div class="row">
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowEleven_Grid3_Pane1" class="RowEleven_Grid3_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowEleven_Grid3_Pane2" class="RowEleven_Grid3_Pane2 DNNEmptyPane"></div>
+              </div>
+              <div class="clearfix visible-sm"></div>
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowEleven_Grid3_Pane3" class="RowEleven_Grid3_Pane3 DNNEmptyPane"></div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div id="dnn_RowEleven_Grid3_Pane4" class="RowEleven_Grid3_Pane4 DNNEmptyPane"></div>
+              </div>
+            </div>
+		 
+            <div class="row">
+              <div class="col-sm-3">
+                <div id="dnn_RowTwelve_Grid3_Pane1" class="RowTwelve_Grid3_Pane1 DNNEmptyPane"></div>
+              </div>
+             <div class="col-sm-3">
+                <div id="dnn_RowTwelve_Grid3_Pane1a" class="RowTwelve_Grid3_Pane1a DNNEmptyPane"></div>
+              </div>
+             <div class="col-sm-3">
+                <div id="dnn_RowTwelve_Grid3_Pane1b" class="RowTwelve_Grid3_Pane1b DNNEmptyPane"></div>
+              </div>
+             
+              <div class="col-sm-3">
+                <div id="dnn_RowTwelve_Grid3_Pane2" class="RowTwelve_Grid3_Pane2 DNNEmptyPane"></div>
+              </div>
+            </div>
+		  </div>
+		
+		    <div class="content_mid clearfix">
+          <div class="pane_layout">
+            <div class="row">
+              <div class="col-sm-4">
+                <div id="dnn_RowThirteen_Grid4_Pane1" class="RowThirteen_Grid4_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-4">
+                <div id="dnn_RowThirteen_Grid4_Pane2" class="RowThirteen_Grid4_Pane2 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-4">
+                <div id="dnn_RowThirteen_Grid4_Pane3" class="RowThirteen_Grid4_Pane3 DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	  </div>
+      <div id="dnn_Full_Screen_PaneF" class="Full_Screen_PaneF DNNEmptyPane"></div>
+      <div class="dnn_layout">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+		    
+            <div class="row">
+              <div class="col-sm-9">
+                <div id="dnn_RowFourteen_Grid9_Pane" class="RowFourteen_Grid9_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-3">
+                <div id="dnn_RowFourteen_Grid3_Pane" class="RowFourteen_Grid3_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div id="dnn_RowFifteen_Grid8_Pane" class="RowFifteen_Grid8_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-4">
+                <div id="dnn_RowFifteen_Grid4_Pane" class="RowFifteen_Grid4_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-7">
+                <div id="dnn_RowSixteen_Grid7_Pane" class="RowSixteen_Grid7_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-5">
+                <div id="dnn_RowSixteen_Grid5_Pane" class="RowSixteen_Grid5_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div id="dnn_RowSeventeen_Grid6_Pane1" class="RowSeventeen_Grid6_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-6">
+                <div id="dnn_RowSeventeen_Grid6_Pane2" class="RowSeventeen_Grid6_Pane2 DNNEmptyPane"></div>
+              </div>
+            </div>
+			<div class="row">
+              <div class="col-sm-6">
+                <div id="dnn_RowSeventeenb_Grid6_Pane1" class="RowSeventeen_Grid6_Pane1 DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-6">
+                <div id="dnn_RowSeventeenb_Grid6_Pane2" class="RowSeventeen_Grid6_Pane2 DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div id="dnn_RowEighteen_Grid5_Pane" class="RowEighteen_Grid5_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-7">
+                <div id="dnn_RowEighteen_Grid7_Pane" class="RowEighteen_Grid7_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div id="dnn_RowNineteen_Grid4_Pane" class="RowNineteen_Grid4_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-8">
+                <div id="dnn_RowNineteen_Grid8_Pane" class="RowNineteen_Grid8_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <div id="dnn_RowTwenty_Grid3_Pane" class="RowTwenty_Grid3_Pane DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-9">
+                <div id="dnn_RowTwenty_Grid9_Pane" class="RowTwenty_Grid9_Pane DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dnn_Full_Screen_PaneG" class="Full_Screen_PaneG DNNEmptyPane"></div>
+      <div class="dnn_layout">
+        <div class="content_mid clearfix">
+          <div class="pane_layout">
+            <div class="row">
+              <div class="col-sm-12">
+                <div id="dnn_BottomPane" class="BottomPane DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="dnn_Full_Screen_PaneH" class="Full_Screen_PaneH DNNEmptyPane"></div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer_box">
+      <div class="foot_bg  ">
+        <div class="clearfix"></div>
+        <div id="dnn_Full_Screen_FootPaneA" class="Full_Screen_FootPaneA    DNNEmptyPane"></div>
+        <div class="dnn_layout">
+          <div class="footer_mid clearfix">
+            <div class="row">
+              <div class="col-sm-12  ">
+                <div id="dnn_FootPaneA" class="FootPaneA"><div class="DnnModule DnnModule-DNN_HTML DnnModule-780"><a name="780"></a><div id="dnn_ctr780_ContentPane"><!-- Start_Module_780 --><div id="dnn_ctr780_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr780_HtmlModule_lblContent" class="Normal">
+	<div class="hidden-xs"><span class="title1"><a href="/" class="title1" target="_blank">USPA</a></span></div>
+<div class="row">
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Make A Skydive</h5>
+<ul class="uspafoot">
+    <li><a href="/Make-A-Skydive/Choose-a-Method" class="listlink">Choose Method</a></li>
+    <li><a href="/Make-A-Skydive/Choose-a-School" class="listlink">Choose A School</a></li>
+    <li><a href="/Make-A-Skydive/Your-First-Jump/Before-Your-Jump" class="listlink">Your First Jump</a>
+    <ul class="uspafoottwo">
+        <li><a href="/Make-A-Skydive/Your-First-Jump/Before-Your-Jump" class="listlink"> &gt; Before Your Jump</a></li>
+        <li><a href="/Make-A-Skydive/Your-First-Jump/During-Your-Jump" class="listlink"> &gt; During Your Jump</a></li>
+        <li><a href="/Make-A-Skydive/Your-First-Jump/After-Your-Jump" class="listlink"> &gt; After Your Jump</a></li>
+    </ul>
+    </li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs"><a href="/Make-A-Skydive/Your-First-Jump/Before-Your-Jump" class="listlink">
+<h5 class="uspafoot">News and Events</h5>
+</a>
+<ul class="uspafoot"><a href="/Make-A-Skydive/Your-First-Jump/Before-Your-Jump" class="listlink">
+    </a>
+    <li><a href="/Make-A-Skydive/Your-First-Jump/Before-Your-Jump" class="listlink"></a><a href="/News-Events/Events-Calendar" class="listlink">Events Calendar</a>
+    <ul class="uspafoottwo">
+        <li><a href="/News-Events/Events-Calendar/Form" class="listlink"> &gt; Submit Event</a></li>
+        <li><a href="/News-Events/Events-Calendar/Instructional-Courses-Submission" class="listlink"> &gt; Submit Instructional Course</a></li>
+        <li><a href="/News-Events/Events-Calendar/Judge-Courses-Submission" class="listlink"> &gt; Submit Judge Course</a></li>
+    </ul>
+    </li>
+    <li><a href="/News-Events/News" class="listlink">News</a></li>
+    <li><a href="/News-Events/Stolen-Gear" class="listlink">Stolen Gear</a>
+    <ul class="uspafoottwo">
+        <li><a href="/News-Events/Stolen-Gear/Submit" class="listlink"> &gt; Submit</a></li>
+    </ul>
+    </li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Safety &amp; Training</h5>
+<ul class="uspafoot">
+    <li><a href="/Make-A-Skydive/Your-First-Jump/Before-Your-Jump" class="listlink"></a><a href="/Safety-Training/Licenses" class="listlink">Licenses</a></li>
+    <li><a href="/Safety-Training/Ratings" class="listlink">Rating</a></li>
+    <li><a href="/Safety-Training/Safety-Day" class="listlink">Safety Day</a></li>
+    <li><a href="/Safety-Training/Accident-Reports" class="listlink">Accident Reports</a></li>
+    <li><a href="/Safety-Training/Waiver-Requests" class="listlink">Waiver Requests</a></li>
+    <li><a href="/Safety-Training/Safety-Training-Advisors" class="listlink">Safety and Training Advisors</a></li>
+    <li><a href="/Safety-Training/Demo-Jumps-PRO-Ratings" class="listlink">Demo Jumps &amp; PRO Ratings</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">FAA &amp; USPA</h5>
+<ul class="uspafoot">
+    <li><a href="/FAA-USPA/Overview" class="listlink">Overview</a></li>
+    <li><a href="/FAA-USPA/FAA-Interpretations" class="listlink">FAA Interpretations</a></li>
+    <li><a href="/FAA-USPA/ATC-Notification-Authorization" class="listlink">ATC Notification / Authorization</a></li>
+    <li><a href="/FAA-USPA/FARs" class="listlink">FARs</a></li>
+    <li><a href="/FAA-USPA/FARs" class="listlink">FAA Guidance</a></li>
+    <li><a href="/FAA-USPA/Aircraft-Modifications" class="listlink">Aircraft Modifications</a></li>
+    <li><a href="/FAA-USPA/Advisory-Circulars" class="listlink">Advisory Circulars</a></li>
+    <li><a href="/FAA-USPA/Airport-Access" class="listlink">Airport Access</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">About USPA</h5>
+<ul class="uspafoot">
+    <li><a href="/About-USPA/USPA-Board-of-Directors" class="listlink">USPA Board of Directors</a></li>
+    <li><a href="/About-USPA/USPA-Staff-Directory" class="listlink">USPA Staff Directory</a></li>
+    <li><a href="/About-USPA/USPA-at-a-Glance" class="listlink">USPA at a Glance</a></li>
+    <li><a href="/About-USPA/Employment" class="listlink">Employment</a></li>
+    <li><a href="/About-USPA/Board-Elections" class="listlink">Board Elections</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Facts/FAQs</h5>
+<ul class="uspafoot">
+    <li><a href="/facts-faqs/demographics" class="listlink">Demographics</a></li>
+    <li><a href="/facts-faqs/disciplines" class="listlink">Disciplines</a></li>
+    <li><a href="/facts-faqs/equipment" class="listlink">Equipment</a></li>
+    <li><a href="/facts-faqs/faqs" class="listlink">FAQs</a></li>
+    <li><a href="/facts-faqs/safety" class="listlink">Safety</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+</div><!-- End_Module_780 --></div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-1105"><a name="1105"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr1105_ContentPane" class="contentpane"><!-- Start_Module_1105 --><div id="dnn_ctr1105_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr1105_HtmlModule_lblContent" class="Normal">
+	<div class="dnntitle hidden-xs"><a class="title1" href="http://competition.uspa.org/" target="_blank">Competition</a></div>
+<div class="row">
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">About</h5>
+<ul class="uspafoot">
+    <li><a class="listlink" href="http://competition.uspa.org/about/overview">Overview</a></li>
+    <li><a class="listlink" href="http://competition.uspa.org/About/History">History</a></li>
+    <li><a class="listlink" href="http://competition.uspa.org/About/Disciplines">Disciplines</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Records</h5>
+<ul class="uspafoot">
+    <li><a class="listlink" href="http://competition.uspa.org/Records/How-to-Claim-a-Record">How to Claim a Record</a></li>
+    <li><a class="listlink" href="http://competition.uspa.org/Records/Lifecycle-of-a-Record">Lifecycle of a Record</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Judging</h5>
+<ul class="uspafoot">
+    <li><a class="listlink" href="http://competition.uspa.org/Judging/Becoming-a-Judge">Becoming a Judge</a></li>
+    <li><a class="listlink" href="http://competition.uspa.org/Judging/Find-a-Judge">Find a Judge</a></li>
+    <li><a class="listlink" href="/News-Events/Events-Calendar/Judge-Rating-Course?Category=4">Judge Rating Courses</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot"><a href="http://competition.uspa.org/Nationals">Nationals</a></h5>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot"><a href="http://usparachuteteam.org/" target="_blank">US Parachute Team</a></h5>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot"><a href="http://membership.uspa.org/FAQs">FAQs</a></h5>
+</div>
+</div>
+</div>
+
+</div><!-- End_Module_1105 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+              </div>
+			</div>  
+			<div class="row">  
+              <div class="col-sm-12  ">
+                <div id="dnn_FootPaneB" class="FootPaneB"><div class="DnnModule DnnModule-DNN_HTML DnnModule-1050"><a name="1050"></a>
+<div class="White">
+     <div ></div>
+     <div id="dnn_ctr1050_ContentPane" class="contentpane"><!-- Start_Module_1050 --><div id="dnn_ctr1050_ModuleContent" class="DNNModuleContent ModDNNHTMLC">
+	<div id="dnn_ctr1050_HtmlModule_lblContent" class="Normal">
+	<div class="dnntitle hidden-xs" style="padding-top: 20px;"><a href="http://membership.uspa.org/" class="title1" target="_blank">Membership</a></div>
+<div class="row">
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Individual Membership</h5>
+<ul class="uspafoot">
+    <li><a href="http://membership.uspa.org/Benefits/Individual-Benefits" class="listlink">Membership Details</a></li>
+    <li><a href="http://membership.uspa.org/Benefits/Group-Member-Benefits" class="listlink">Benefits</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Group Membership</h5>
+<ul class="uspafoot">
+    <li><a href="http://membership.uspa.org/membership/individual-membership" class="listlink">Membership Details</a></li>
+    <li><a href="http://membership.uspa.org/Group-Membership/Group-Member-Benefits" class="listlink">Group Membership Benefits</a></li>
+    <li><a href="http://membership.uspa.org/Group-Membership/Aircraft-Maintenance-Operations-Piloting" class="listlink">Aircraft Maintenance, Operations &amp; Piloting</a></li>
+    <li><a href="http://membership.uspa.org/Group-Membership/Formation-Flying-for-Jump-Pilots" class="listlink">Formation Flying for Jump Pilots</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">Awards</h5>
+<ul class="uspafoot">
+    <li><a href="http://membership.uspa.org/Awards/USPA-Lifetime-Achievement-Award" class="listlink">USPA Lifetime Achievement Award</a></li>
+    <li><a href="http://membership.uspa.org/Awards/USPA-Gold-Medal-for-Meritorious-Service" class="listlink">USPA Gold Medal for Meritorious Service</a></li>
+    <li><a href="http://membership.uspa.org/Awards/Award-Types" class="listlink">Award Types</a></li>
+</ul>
+</div>
+<div class="col-sm-2 hidden-xs">
+<h5 class="uspafoot">USPA Programs</h5>
+<ul class="uspafoot">
+    <li><a href="http://membership.uspa.org/USPA-Programs/College-Clubs" class="listlink">College Clubs</a></li>
+    <li><a href="http://membership.uspa.org/USPA-Programs/Sisters-In-Skydiving" class="listlink">Sisters In Skydiving</a></li>
+</ul>
+</div>
+<div class="col-sm-4 hidden-xs">
+<div class="col-sm-3 hidden-xs">
+<h5 class="uspafoot"><a href="http://membership.uspa.org/FAQs">FAQs</a></h5>
+</div>
+<div class="col-sm-9 hidden-xs">
+<ul class="uspafoot">
+    <li><img alt="" class="resp" src="http://competition.uspa.org/portals/0/Images/header_bg.png" /></li>
+    <li>USPA</li>
+    <li>5401 Southpoint Centre Blvd.</li>
+    <li>Fredericksburg, VA, 22407</li>
+    <li>phone (540) 604-9740</li>
+    <li>fax (540) 604-9741</li>
+    <li>uspa@uspa.org</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- End_Module_1050 --></div>
+     <div class="c_footer"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></div>
+				
+              </div> 
+               <div class="col-sm-12  ">
+                <div id="dnn_FootPaneC" class="FootPaneC DNNEmptyPane"></div>
+              </div> 
+			</div>  
+            <div class="row">
+              <div class="col-sm-12  ">
+                <div id="dnn_FootPaneD" class="FootPaneD DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3  ">
+                <div id="dnn_FootPaneE" class="FootPaneE DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-9  ">
+                <div id="dnn_FootPaneF" class="FootPaneF DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 col-sm-6  ">
+                <div id="dnn_FootPaneG" class="FootPaneG DNNEmptyPane"></div>
+              </div>
+              <div class="col-md-3 col-sm-6  ">
+                <div id="dnn_FootPaneH" class="FootPaneH DNNEmptyPane"></div>
+              </div>
+              <div class="clearfix visible-sm"></div>
+              <div class="col-md-3 col-sm-6  ">
+                <div id="dnn_FootPaneI" class="FootPaneI DNNEmptyPane"></div>
+              </div>
+              <div class="col-md-3 col-sm-6  ">
+                <div id="dnn_FootPaneJ" class="FootPaneJ DNNEmptyPane"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3   ">
+                <div id="dnn_FootPaneK" class="FootPaneK DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-3  ">
+                <div id="dnn_FootPaneL" class="FootPaneL DNNEmptyPane"></div>
+              </div>
+              <div class="col-sm-6   ">
+                <div id="dnn_FootPaneM" class="FootPaneM DNNEmptyPane"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="dnn_Full_Screen_FootPaneB" class="Full_Screen_FootPaneB    DNNEmptyPane"></div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="footer_bottom   ">
+        <div class="dnn_layout">
+          <div class="footer_mid clearfix">
+            <div class="copyright_style">
+              <span id="dnn_dnnCOPYRIGHT_lblCopyright" class="footer  ">Copyright 2016 by United States Parachute Association</span>
+
+              <span class="sep  ">|</span>
+              <a id="dnn_dnnPRIVACY_hypPrivacy" class="terms  " rel="nofollow" href="http://www.uspa.org/Privacy">Privacy Statement</a>
+              <span class="sep  ">|</span>
+              <a id="dnn_dnnTERMS_hypTerms" class="terms  " rel="nofollow" href="http://www.uspa.org/Terms">Terms Of Use</a>
+			  <span class="sep  ">|</span>
+			  <div id="Login">
+		  <div class="user_position">
+			
+
+			
+<div id="dnn_dnnLogin_loginGroup" class="loginGroup">
+    <a id="dnn_dnnLogin_enhancedLoginLink" title="Login" class="secondaryActionsList" rel="nofollow" onclick="return dnnModal.show(&#39;http://www.uspa.org/Login?returnurl=/Drop-Zone-Locator?location=1165&amp;popUp=true&#39;,/*showReturn*/true,300,650,true,&#39;&#39;)" href="http://www.uspa.org/Login?returnurl=%2fDrop-Zone-Locator%3flocation%3d1165">Login</a>
+</div>
+			<div class="language-object" >
+
+
+</div>
+		  </div>
+              
+            </div>
+            <div id="dnn_FooterPane" class="FooterPane   DNNEmptyPane"></div>
+          </div>
+        </div>
+      </div>
+      <div id="to_top" class=" " ></div>
+    </footer>
+    <!-- Footer End --> 
+  </div>
+</div>
+<!--script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script--> 
+<script type="text/javascript" src="/Portals/_default/Skins/20066-UnlimitedColorsPack-048/scripts/script.js"></script> 
+<script type="text/javascript" src="/Portals/_default/Skins/20066-UnlimitedColorsPack-048/scripts/custom.js"></script> 
+
+
+
+
+
+        <input name="ScrollTop" type="hidden" id="ScrollTop" />
+        <input name="__dnnVariable" type="hidden" id="__dnnVariable" autocomplete="off" value="`{`__scdoff`:`1`,`sf_siteRoot`:`/`,`sf_tabId`:`213`}" />
+        <input name="__RequestVerificationToken" type="hidden" value="FmAo49Rl8SKOOz9m7KZSNUgglK53WML1L1nTg45mLMT03YwaCxinXNSblQnwpWCEwAoloUcxJCfKU74EN27JjUDXEHfUHedDDbKA39JNKBzoVJMK6OBu64KGO9Q1" />
+    
+<script type="text/javascript" src="/Resources/Shared/scripts/initWidgets.js" ></script></form>
+    
+    
+</body>
+</html>
