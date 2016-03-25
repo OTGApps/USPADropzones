@@ -74,6 +74,8 @@ class DZScraper
       1173, # Laurinburg-Maxton
       1333, # The California Parachute Club
       1338, # US Army Parachute Team
+      1720, # Sport Parachuting at UC Davis
+      1337, # University at Buffalo Skydiving Club
     ]
   end
 
