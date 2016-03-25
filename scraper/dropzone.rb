@@ -155,7 +155,7 @@ class DZScraper
     case key
     when :aircraft
       if new_value.downcase == "varies"
-        "Varies"
+        ["Varies"]
       else
         new_value = new_value.split(" and/or ").join(", ")
         new_value.split(", ").map do |a|
