@@ -153,36 +153,62 @@ class DZScraper
       if new_value.downcase == "varies"
         "Varies"
       else
+        new_value = new_value.split(" and/or ").join(", ")
         new_value.split(", ").map do |a|
           new_a = a.split("--").first.chomp(" ").chomp(",")
           new_a = new_a.gsub("1-", "1 ")
+          new_a = new_a.gsub("1Cessna", "1 Cessna")
 
           # Fix Aircraft Names
           new_a = new_a.gsub(/C-([0-9]{3})/, 'Cessna \1')
                        .gsub("P-750", "PAC 750")
+                       .gsub(" (varies)", "")
                        .gsub("Skyvan", "SkyVan")
                        .gsub("Supervan", "SuperVan")
                        .gsub("R44", "Robinson 44")
                        .gsub("50HP ", "")
-                       .gsub("Caravan SubperVan", "SuperVan")
+                       .gsub("Caravan SuperVan", "SuperVan")
                        .gsub("SMG92-", "SMG-92 ")
                        .gsub("c-182", "Cessna 182")
-                       .gsub("C ", "Cessna ")
+                       .gsub("C 208", "Cessna 208")
+                       .gsub("C 172", "Cessna 172")
                        .gsub("C-", "Cessna ")
-                       .gsub("BlackHawkGrand", "BlackHawk Grand")
                        .gsub("Cessna Caravan", "Cessna 208 Caravan")
-          #          .gsub(/^([0-9]{1})-/, '\1 ')
-          #          .gsub("Super Grand Caravan", "Super Caravan")
-          #          .gsub("Super Cessna 182", "Cessna 182 - Super")
+                       .gsub("Cessna Grand Caravan", "Cessna 208B Grand Caravan")
+                       .gsub("Cessna SuperVan", "Cessna 208 SuperVan")
+                       .gsub("Grand Caravan", "Cessna 208B Grand Caravan")
+                       .gsub("SM-92T", "SM-92T Turbo Finist")
+                       .gsub("Super Cessna 182", "Cessna 182 (Super)")
+                       .gsub("Short Cessna 23 Sherpa", "Cessna 23 Sherpa (Short)")
 
           # Fix BlackHawk
-          if new_a.downcase.end_with?("blackhawk")
+          if new_a.downcase.match("blackhawk")
             new_a = new_a[0] + " Cessna 208 BlackHawk Grand Caravan"
+          end
+
+          # Fix 208B
+          if new_a.end_with?("208B")
+            new_a << " Grand Caravan"
           end
 
           # Fix Antonov An-2
           if new_a.downcase.end_with?("an-2") || new_a.downcase.end_with?("an2")
             new_a = new_a[0] + " Antonov An-2"
+          end
+
+          # Fix Super Caravan
+          if new_a.downcase.end_with?("super caravan")
+            new_a = new_a[0] + " Cessna 208 Super Caravan"
+          end
+
+          # Fix Caravan
+          if new_a.downcase == "1 caravan"
+            new_a = "1 Cessna 208 Caravan"
+          end
+
+          # Fix Turbine Porter
+          if new_a.downcase.end_with?("turbine porter")
+            new_a = new_a[0] + " Pilatus Porter"
           end
 
           # Fix Let L-410 Turbolet
