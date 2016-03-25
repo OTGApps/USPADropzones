@@ -12,7 +12,8 @@ class DZScraper
     pretty = true
     result = scrape
 
-    File.open("../dropzones-new.geojson","w") do |f|
+    # File.open("../../../OTGApps/dropzones/resources/dropzones.geojson", "w") do |f|
+    File.open("../dropzones.geojson","w") do |f|
       f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
     end
   end
