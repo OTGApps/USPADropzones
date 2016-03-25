@@ -150,29 +150,31 @@ class DZScraper
 
     case key
     when :aircraft
-      new_value.split(", ").map do |a|
-        # Fix Cessnas
-        new_a = a.gsub(/C-([0-9]{3})/, 'Cessna \1')
-                 .gsub(/^([0-9]{1})-/, '\1 ')
-                 .gsub("P-750", "PAC 750")
-        #          .gsub("Super Grand Caravan", "Super Caravan")
-        #          .gsub("208B Supervan", "208 Super Caravan")
-        #          .gsub("Super Cessna 182", "Cessna 182 - Super")
-        # new_a = "2 Twin Otters" if new_a == "2"
+      if new_value.downcase == "varies"
+        "Varies"
+      else
+        new_value.split(", ").map do |a|
+          # Fix Cessnas
+          new_a = a.gsub(/C-([0-9]{3})/, 'Cessna \1')
+                   .gsub(/^([0-9]{1})-/, '\1 ')
+                   .gsub("P-750", "PAC 750")
+          #          .gsub("Super Grand Caravan", "Super Caravan")
+          #          .gsub("208B Supervan", "208 Super Caravan")
+          #          .gsub("Super Cessna 182", "Cessna 182 - Super")
+          # new_a = "2 Twin Otters" if new_a == "2"
 
-        if new_a.downcase.include?("beech")
-          new_a = new_a.titleize
+          if new_a.downcase.include?("beech")
+            new_a = new_a.titleize
+          end
+
+          new_a << "PA31" if new_a.end_with?("Navajo")
+          new_a = "1 #{new_a}" unless new_a[0].is_i?
+
+          # Fix issues with plurals
+          new_a << "s" if new_a.start_with?("2") && !new_a.end_with?("s")
+          new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
+          new_a.chomp(",")
         end
-
-        new_a << "PA31" if new_a.end_with?("Navajo")
-        new_a = "1 #{new_a}" unless new_a[0].is_i?
-
-
-
-        # Fix issues with plurals
-        new_a << "s" if new_a.start_with?("2") && !new_a.end_with?("s")
-        new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
-        new_a.chomp(",")
       end
     when :location
       new_value.split("\n")
