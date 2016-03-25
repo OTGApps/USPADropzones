@@ -3,6 +3,7 @@ require 'open-uri'
 require 'bundler'
 Bundler.require
 require './string'
+require './states'
 
 
 class DZScraper
@@ -230,7 +231,11 @@ class DZScraper
         end.compact
       end
     when :location
-      new_value.split("\n")
+      States.all.each do |abbrev, name|
+        new_value = new_value.gsub(", #{abbrev.to_s.upcase} ", ", #{name} ")
+      end
+
+      new_value.split("\n")#.map{|l| l.gsub(/^[a-zA-Z ],\s[a-zA-Z ]\s(\d{4})$/, ' 0\1')}
     when :description
       if value.downcase == "none listed"
         ""
