@@ -65,7 +65,15 @@ class DZScraper
   end
 
   def skip_anchors
-    @_skip_anchors ||= [1179, 1149, 1185, 1189, 1173, 1333, 1338]
+    @_skip_anchors ||= [
+      1179, # Marana Skydiving Center
+      1149, # Complete Parachute Solutions Tactical Training Facility
+      1185, # Military Freefall Solutions Inc.
+      1189, # Naval Postgraduate School Foundation Skydiving Club
+      1173, # Laurinburg-Maxton
+      1333, # The California Parachute Club
+      1338, # US Army Parachute Team
+    ]
   end
 
   def scrape
