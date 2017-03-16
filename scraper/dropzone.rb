@@ -68,6 +68,7 @@ class DZScraper
 
   def skip_anchors
     @_skip_anchors ||= [
+      316,  # Dummy data
       1179, # Marana Skydiving Center
       1149, # Complete Parachute Solutions Tactical Training Facility
       1185, # Military Freefall Solutions Inc.
@@ -77,6 +78,8 @@ class DZScraper
       1338, # US Army Parachute Team
       1720, # Sport Parachuting at UC Davis
       1337, # University at Buffalo Skydiving Club
+      1876, # Aerograd Kolomna
+      1873, # Skydive Broncos at Western Michigan University
     ]
   end
 
