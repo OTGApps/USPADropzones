@@ -302,7 +302,7 @@ class DZScraper
   def countries
     # Dir.chdir('local_files/international')
     # Dir.glob('*').select {|f| File.directory? f}.sort
-    ["AE", "AR", "BE", "BG", "BR", "CA", "CH", "CN", "CR", "CZ", "DE", "DK", "ES", "FI", "FR", "GR", "GT", "HR", "IE", "IL", "IN", "IT", "JP", "KE", "LV", "MA", "MX", "NA", "PL", "PT", "PY", "RO", "RS", "RU", "TH"]
+    ["AR", "BE", "BR", "BG", "CA", "CL", "CN", "CR", "HR", "CZ", "DK", "FI", "FR", "DE", "GR", "HU", "IN", "IE", "IL", "IT", "JP", "KE", "MX", "MA", "NA", "NL", "PH", "PL", "PT", "QA", "RO", "RU", "ES", "CH", "TH", "UA", "AE", "VI", "VE"]
   end
 
   def state_page_url(state)
