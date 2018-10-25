@@ -5,6 +5,7 @@ Bundler.require
 require './string'
 require './states'
 
+require 'csv'
 
 class DZScraper
   def initialize
@@ -19,71 +20,69 @@ class DZScraper
     end
   end
 
-  def parse_state_country(file_name, abbrev, folder)
-    # Open the file
-    page = parse_file(file_name)
-    # Get the links to the different dropzones in the state:
-    dz_ids = page.css('a').select{|alink| (alink['href'] || '').include?("DZdetails")}.map{|l| l[:href].split("=").last }
-    dz_ids.each do |loc_id|
-      dz_file_name = "local_files/#{folder}/#{abbrev}/#{loc_id}.html"
-      unless File.file?(dz_file_name)
-        puts "Writing file to: " + dz_file_name
-        url = location_url(loc_id)
-        agent.get(url).save(dz_file_name)
-      end
-    end
-  end
-
-  def agent
-    @_agent ||= Mechanize.new { |agent|
-      agent.user_agent_alias = 'Mac Safari'
-    }
-  end
-
   def cache_files_locally
-    # Start with States
-    states.each do |abbrev|
-      file_name = "local_files/usa/#{abbrev}.html"
-      unless File.file?(file_name)
-        url = state_page_url(abbrev)
-        agent.get(url).save(file_name)
-      end
-
-      parse_state_country(file_name, abbrev, 'usa')
+    # Get the main dz locator page:
+    file_name = "local_files/000_all.html"
+    unless File.file?(file_name)
+      puts "Writing file to: " + file_name
+      agent.get("https://uspa.org/dzlocator").save(file_name)
     end
 
-    # Then to countries
-    countries.each do |abbrev|
-      file_name = "local_files/international/#{abbrev}.html"
-      unless File.file?(file_name)
-        pp "Writing File: " + file_name
-        url = country_page_url(abbrev)
-        agent.get(url).save(file_name)
-      end
-      parse_state_country(file_name, abbrev,'international')
+    # Extract all the places
+    lines = []
+    File.open(file_name).each do |line|
+      lines << line.strip if line.strip.start_with?('markers.push') || line.strip.start_with?('infoWindowContent.push')
     end
+
+    # Parse the places
+    places = {}
+    lines.each_with_index do |l, index|
+      next if index.odd?
+
+      account = lines[index+1].scan(/<([^>]*)>/).find{|a| a.first.include?('accountnumber')}.first
+      if account
+        account_number = account.split('=').last
+
+        # Now get the name and lat/long
+        data = l.gsub('markers.push([', '').gsub(']);', '')
+        parsed_data = CSV.parse(data, :converters=> lambda {|f| f ? f.strip : nil}, :quote_char => "'").first
+        places[account_number] = {
+          name: parsed_data[0],
+          latitude: parsed_data[1],
+          longitude: parsed_data[2],
+         }
+      end
+    end
+
+    # Now that we have a list of the places and their lat/long, lets get their
+    # details.
+
+    places.keys.each do |place_account|
+      file_name = "local_files/dropzone/#{place_account}.html"
+      unless File.file?(file_name)
+        puts "Writing file to: " + file_name
+        agent.get(location_url(place_account)).save(file_name)
+      end
+    end
+
   end
 
-  def parse_file(file_name)
-    Nokogiri::HTML(open(file_name))
-  end
-
-  def skip_anchors
-    @_skip_anchors ||= [
-      316,  # Dummy data
-      1179, # Marana Skydiving Center
-      1149, # Complete Parachute Solutions Tactical Training Facility
-      1185, # Military Freefall Solutions Inc.
-      1189, # Naval Postgraduate School Foundation Skydiving Club
-      1173, # Laurinburg-Maxton
-      1333, # The California Parachute Club
-      1338, # US Army Parachute Team
-      1720, # Sport Parachuting at UC Davis
-      1337, # University at Buffalo Skydiving Club
-      1876, # Aerograd Kolomna
-      1873, # Skydive Broncos at Western Michigan University
-    ]
-  end
+  # def skip_anchors
+  #   @_skip_anchors ||= [
+  #     316,  # Dummy data
+  #     1179, # Marana Skydiving Center
+  #     1149, # Complete Parachute Solutions Tactical Training Facility
+  #     1185, # Military Freefall Solutions Inc.
+  #     1189, # Naval Postgraduate School Foundation Skydiving Club
+  #     1173, # Laurinburg-Maxton
+  #     1333, # The California Parachute Club
+  #     1338, # US Army Parachute Team
+  #     1720, # Sport Parachuting at UC Davis
+  #     1337, # University at Buffalo Skydiving Club
+  #     1876, # Aerograd Kolomna
+  #     1873, # Skydive Broncos at Western Michigan University
+  #   ]
+  # end
 
   def scrape
     dzs = {
@@ -91,13 +90,15 @@ class DZScraper
       features: []
     }
     all_files.map do |lf|
-      # puts "Scraping #{lf}"
+      puts "Scraping #{lf}"
       html = open(lf)
       page = Nokogiri::HTML(html)
 
+      # binding.pry
+
       parsed = parse(page, lf)
 
-      dzs[:features] << parsed unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
+      dzs[:features] << parsed #unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
     dzs[:features] = dzs[:features].sort_by{|f| f[:properties][:name]}
     dzs
@@ -286,41 +287,20 @@ class DZScraper
     }
   end
 
-  def usa_files
-    Dir["local_files/usa/*/*.html"]
-  end
-
-  def international_files
-    Dir["local_files/international/*/*.html"]
-  end
-
   def all_files
-    usa_files + international_files
-  end
-
-  def states
-    # Dir.chdir('local_files/usa')
-    # Dir.glob('*').select {|f| File.directory? f}.sort
-    ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MT", "NC", "ND", "NE", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV"]
-  end
-
-  def countries
-    # Dir.chdir('local_files/international')
-    # Dir.glob('*').select {|f| File.directory? f}.sort
-    %w(AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD BB BY BE BZ BJ BM BT BO BQ BA BW BV BR IO BN BG BF BI KH CM CA CV KY CF TD CL CN CX CC CO KM CG CD CK CR CI HR CU CW CY CZ DK DJ DM DO EC EG SV GQ ER EE ET FK FO FJ FI FR GF PF TF GA GM GE DE GH GI GR GL GD GP GU GT GG GN GW GY HT HM VA HN HK HU IS IN ID IR IQ IE IM IL IT JM JP JE JO KZ KE KI KP KR KW KG LA LV LB LS LR LY LI LT LU MO MK MG MW MY MV ML MT MH MQ MR MU YT MX FM MD MC MN ME MS MA MZ MM NA NR NP NL NC NZ NI NE NG NU NF MP NO OM PK PW PS PA PG PY PE PH PN PL PT PR QA RE RO RU RW BL SH KN LC MF PM VC WS SM ST SA SN RS SC SL SG SX SK SI SB SO ZA GS SS ES LK SD SR SJ SZ SE CH SY TW TJ TZ TH TL TG TK TO TT TN TR TM TC TV UG UA AE GB UM UY UZ VU VE VN VG VI WF EH YE ZM ZW)
-  end
-
-  def state_page_url(state)
-    "https://uspa.org/dzlocator?DZ=&City=&State=#{state}&Region=&CountryHidden=&Country=&FindaDZ=Find"
-  end
-
-  def country_page_url(country)
-    "https://uspa.org/dzlocator?DZ=&City=&State=&Region=&CountryHidden=&Country=#{country}&FindaDZ=Find"
+    Dir["local_files/dropzone/*.html"]
   end
 
   def location_url(location)
     "https://uspa.org/DZdetails?accountnumber=#{location}"
   end
+
+  def agent
+    @_agent ||= Mechanize.new { |agent|
+      agent.user_agent_alias = 'Mac Safari'
+    }
+  end
+
 end
 
 dzs = DZScraper.new
