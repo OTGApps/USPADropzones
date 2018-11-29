@@ -96,6 +96,7 @@ class DZScraper
       data_we_care_about = page.css('.mx-product-details-template .col-sm-10').first
 
       parsed = parse(data_we_care_about, lf)
+      parsed[:training] = page.css('#dnn_ctr1586_ContentPane').css('p').last.parent.parent.parent.parent.text.split('##LOC[Cancel]##').last.strip.split("\r\n")
 
       dzs[:features] << parsed #unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
@@ -127,7 +128,7 @@ class DZScraper
     dz_data[:properties][:aircraft] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
     dz_data[:properties][:description] = page.css('hr').first.next_element.text.chomp.strip
     # binding.pry
-    # dz_data[:properties][:services] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
+    dz_data[:properties][:services] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
 
 
 
@@ -215,7 +216,6 @@ class DZScraper
   end
 
   def details(page)
-    binding.pry
     rows = page
 
     detail = {}
