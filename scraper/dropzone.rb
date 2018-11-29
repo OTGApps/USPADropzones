@@ -207,63 +207,6 @@ class DZScraper
     end.compact
   end
 
-  def details(page)
-    rows = page
-
-    detail = {}
-    rows.search('dt').each do |node|
-      key = parse_detail_key(node.text)
-      detail[key] = parse_detail_value(node.next_element.text, key)
-    end
-
-    detail.merge(parse_amenities(page))
-  end
-
-  def parse_detail_key(key)
-    new_key = key.downcase.strip.chomp.gsub(":", "").gsub("/", "").gsub(" ", "_").to_sym
-
-    case new_key
-    when :additional_information
-      :description
-    else
-      new_key
-    end
-  end
-
-  def parse_detail_value(value, key)
-    new_value = if value.is_a?(Array)
-      value.map{|v| v.gsub("\t", "").gsub("\"\"", "\"").gsub("\n\n", "\n").strip.chomp }
-    else
-      value.gsub("\t", "").gsub("\"\"", "\"").gsub("\n\n", "\n").strip.chomp
-    end
-
-    case key
-    when :aircraft
-      if new_value.downcase == "varies"
-        ["Varies"]
-      else
-      end
-    when :location
-      States.all.each do |abbrev, name|
-        new_value = new_value.gsub(", #{abbrev.to_s.upcase} ", ", #{name} ")
-      end
-
-      new_value.split("\n")#.map{|l| l.gsub(/^[a-zA-Z ],\s[a-zA-Z ]\s(\d{4})$/, ' 0\1')}
-    when :description
-      if value.downcase == "none listed"
-        ""
-      else
-        new_value
-      end
-    when :training
-      new_value.map do |v|
-        v.gsub("(", " (").gsub("  (", " (")
-      end
-    else
-      new_value
-    end
-  end
-
   def parse_lat_lng(page)
     links = page.css('a').map(&:values).flatten
     google_links =  links.select do |item|
@@ -277,32 +220,6 @@ class DZScraper
     coords = coords.map{|ll| ll.gsub("30-", "30.").gsub("/", "") }
 
     coords.map(&:to_f)
-  end
-
-  def parse_amenities(page)
-    amenities = page.css('dl.amenities')
-    all_training = []
-    all_services = []
-
-    got_training = false
-    got_services = false
-
-    amenities.search("dd.serviceSelected, dt").each do |a|
-      if !got_training && a.name == "dt"
-        got_training = true
-      elsif !got_services && a.name == "dt"
-        got_services = true
-      elsif got_training && !got_services
-        all_training << a.text
-      elsif got_services
-        all_services << a.text
-      end
-    end
-
-    {
-      training: parse_detail_value(all_training, :training),
-      services: parse_detail_value(all_services, :services)
-    }
   end
 
   def all_files
