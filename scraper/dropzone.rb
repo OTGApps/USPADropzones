@@ -96,8 +96,13 @@ class DZScraper
       data_we_care_about = page.css('.mx-product-details-template .col-sm-10').first
 
       parsed = parse(data_we_care_about, lf)
-      parsed[:training] = page.css('#dnn_ctr1586_ContentPane').css('p').last.parent.parent.parent.parent.text.split('##LOC[Cancel]##').last.strip.split("\r\n")
-      parsed[:services] = page.css('#dnn_ctr1585_ModuleContent').css('p').last.parent.parent.parent.parent.text.split('##LOC[Cancel]##').last.strip.split("\r\n")
+
+      # These two aren't in the data_we_care_about variable so we have to get it outside that code block.
+      parsed[:properties][:training] = page.css('#dnn_ctr1586_ContentPane').css('p').last.parent.parent.parent.parent.text.split('##LOC[Cancel]##').last.strip.split("\r\n")
+      parsed[:properties][:services] = page.css('#dnn_ctr1585_ModuleContent').css('p').last.parent.parent.parent.parent.text.split('##LOC[Cancel]##').last.strip.split("\r\n")
+
+      # Sort by key
+      parsed[:properties] = parsed[:properties].sort.to_h
 
       dzs[:features] << parsed #unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
@@ -116,7 +121,7 @@ class DZScraper
       }
     }
 
-    # dz_data[:properties][:anchor] = file_name.split("/").last.split(".").first
+    dz_data[:properties][:anchor] = file_name.split("/").last.split(".").first
     dz_data[:properties][:name] = page.css('h2').first.text.chomp.strip
     pp 'name: ' + dz_data[:properties][:name]
 
@@ -128,8 +133,17 @@ class DZScraper
     dz_data[:properties][:email] = page.css('.fa-envelope').first.next_element.text.chomp.strip
     dz_data[:properties][:aircraft] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
     dz_data[:properties][:description] = page.css('hr').first.next_element.text.chomp.strip
+    dz_data[:properties][:location] = parse_location_array(page)
 
     dz_data
+  end
+
+  def parse_location_array(page)
+    children = page.css('p').children
+    children.shift
+    first_i = children.find_index { |e| e.name == 'i' }
+    location_array = children[0..first_i].search('~ br').map{|br| br.next.text.strip}.reject(&:empty?)
+    location_array.map{|l| l.strip.gsub(/[[:space:]]/, ' ').gsub(/\s+/, ' ') }
   end
 
   def parse_aircraft_string(aircraft)
