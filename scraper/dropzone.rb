@@ -93,14 +93,14 @@ class DZScraper
       puts "Scraping #{lf}"
       html = open(lf)
       page = Nokogiri::HTML(html)
+      data_we_care_about = page.css('.mx-product-details-template .col-sm-10').first
 
-      # binding.pry
-
-      parsed = parse(page, lf)
+      parsed = parse(data_we_care_about, lf)
 
       dzs[:features] << parsed #unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
     dzs[:features] = dzs[:features].sort_by{|f| f[:properties][:name]}
+    pp dzs
     dzs
   end
 
@@ -114,22 +114,108 @@ class DZScraper
       }
     }
 
-    dz_data[:properties][:anchor] = file_name.split("/").last.split(".").first
-    dz_data[:properties][:name] = page.css('div.panel.panel-primary.dropzone > div.panel-heading > div > div > div.col-sm-8 > h3').text.chomp.strip
-
-    # Get additional details about the DZ
-    dz_data[:properties].merge!(details(page))
-    dz_data[:properties] = dz_data[:properties].sort.to_h
+    # dz_data[:properties][:anchor] = file_name.split("/").last.split(".").first
+    dz_data[:properties][:name] = page.css('h2').first.text.chomp.strip
+    pp 'name: ' + dz_data[:properties][:name]
 
     # Grab the lat and lng
-    dz_data[:geometry][:coordinates] = parse_lat_lng(dz_data[:properties].delete(:latlong))
+    dz_data[:geometry][:coordinates] = parse_lat_lng(page)
+
+    # binding.pry
+    dz_data[:properties][:website] = page.css('.fa-external-link').first.next_element.text
+    dz_data[:properties][:phone] = page.css('.fa-phone').first.next_element.text
+    dz_data[:properties][:email] = page.css('.fa-envelope').first.next_element.text
+    # binding.pry
+    dz_data[:properties][:aircraft] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
+
+
+
+    # Get additional details about the DZ
+    # dz_data[:properties].merge!(details(page))
+    # dz_data[:properties] = dz_data[:properties].sort.to_h
 
 
     dz_data
   end
 
+  def parse_aircraft_string(aircraft)
+    new_value = aircraft.split(" and/or ").join(", ")
+    new_value.split(", ").map do |a|
+      new_a = a.split("--").first.chomp(" ").chomp(",")
+      new_a = new_a.gsub("1-", "1 ")
+      new_a = new_a.gsub("1Cessna", "1 Cessna")
+
+      # Fix Aircraft Names
+      new_a = new_a.gsub(/C-([0-9]{3})/, 'Cessna \1')
+                   .gsub("P-750", "PAC 750")
+                   .gsub(" (varies)", "")
+                   .gsub("Skyvan", "SkyVan")
+                   .gsub("Supervan", "SuperVan")
+                   .gsub("R44", "Robinson 44")
+                   .gsub("50HP ", "")
+                   .gsub("Caravan SuperVan", "SuperVan")
+                   .gsub("SMG92-", "SMG-92 ")
+                   .gsub("c-182", "Cessna 182")
+                   .gsub("C 208", "Cessna 208")
+                   .gsub("C 172", "Cessna 172")
+                   .gsub("C-", "Cessna ")
+                   .gsub("Cessna Caravan", "Cessna 208 Caravan")
+                   .gsub("Cessna Grand Caravan", "Cessna 208B Grand Caravan")
+                   .gsub("Cessna SuperVan", "Cessna 208 SuperVan")
+                   .gsub("Grand Caravan", "Cessna 208B Grand Caravan")
+                   .gsub("SM-92T", "SM-92T Turbo Finist")
+                   .gsub("Super Cessna 182", "Cessna 182 (Super)")
+                   .gsub("Short Cessna 23 Sherpa", "Cessna 23 Sherpa (Short)")
+
+      # Fix BlackHawk
+      if new_a.downcase.match("blackhawk")
+        new_a = new_a[0] + " Cessna 208 BlackHawk Grand Caravan"
+      end
+
+      # Fix 208B
+      if new_a.end_with?("208B")
+        new_a << " Grand Caravan"
+      end
+
+      # Fix Antonov An-2
+      if new_a.downcase.end_with?("an-2") || new_a.downcase.end_with?("an2")
+        new_a = new_a[0] + " Antonov An-2"
+      end
+
+      # Fix Super Caravan
+      if new_a.downcase.end_with?("super caravan")
+        new_a = new_a[0] + " Cessna 208 Super Caravan"
+      end
+
+      # Fix Caravan
+      if new_a.downcase == "1 caravan"
+        new_a = "1 Cessna 208 Caravan"
+      end
+
+      # Fix Turbine Porter
+      if new_a.downcase.end_with?("turbine porter")
+        new_a = new_a[0] + " Pilatus Porter"
+      end
+
+      # Fix Let L-410 Turbolet
+      if new_a.match("L410") || new_a.match("Let 410") || new_a.match("L-410")
+        new_a = new_a[0] + " Let L-410 Turbolet"
+      end
+
+      new_a = new_a.titleize if new_a.downcase.include?("beech") || new_a.downcase.include?("casa")
+      new_a << " PA31" if new_a.end_with?("Navajo")
+      new_a = "1 #{new_a}" unless new_a[0].is_i?
+
+      # Fix issues with plurals
+      new_a << "s" if new_a.start_with?("2") && !new_a.end_with?("s")
+      new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
+      new_a.end_with?("Super") ? nil : new_a
+    end.compact
+  end
+
   def details(page)
-    rows = page.css('div.panel.panel-primary.dropzone > div.panel-body > div.col-sm-12.col-md-5')
+    binding.pry
+    rows = page
 
     detail = {}
     rows.search('dt').each do |node|
@@ -163,78 +249,6 @@ class DZScraper
       if new_value.downcase == "varies"
         ["Varies"]
       else
-        new_value = new_value.split(" and/or ").join(", ")
-        new_value.split(", ").map do |a|
-          new_a = a.split("--").first.chomp(" ").chomp(",")
-          new_a = new_a.gsub("1-", "1 ")
-          new_a = new_a.gsub("1Cessna", "1 Cessna")
-
-          # Fix Aircraft Names
-          new_a = new_a.gsub(/C-([0-9]{3})/, 'Cessna \1')
-                       .gsub("P-750", "PAC 750")
-                       .gsub(" (varies)", "")
-                       .gsub("Skyvan", "SkyVan")
-                       .gsub("Supervan", "SuperVan")
-                       .gsub("R44", "Robinson 44")
-                       .gsub("50HP ", "")
-                       .gsub("Caravan SuperVan", "SuperVan")
-                       .gsub("SMG92-", "SMG-92 ")
-                       .gsub("c-182", "Cessna 182")
-                       .gsub("C 208", "Cessna 208")
-                       .gsub("C 172", "Cessna 172")
-                       .gsub("C-", "Cessna ")
-                       .gsub("Cessna Caravan", "Cessna 208 Caravan")
-                       .gsub("Cessna Grand Caravan", "Cessna 208B Grand Caravan")
-                       .gsub("Cessna SuperVan", "Cessna 208 SuperVan")
-                       .gsub("Grand Caravan", "Cessna 208B Grand Caravan")
-                       .gsub("SM-92T", "SM-92T Turbo Finist")
-                       .gsub("Super Cessna 182", "Cessna 182 (Super)")
-                       .gsub("Short Cessna 23 Sherpa", "Cessna 23 Sherpa (Short)")
-
-          # Fix BlackHawk
-          if new_a.downcase.match("blackhawk")
-            new_a = new_a[0] + " Cessna 208 BlackHawk Grand Caravan"
-          end
-
-          # Fix 208B
-          if new_a.end_with?("208B")
-            new_a << " Grand Caravan"
-          end
-
-          # Fix Antonov An-2
-          if new_a.downcase.end_with?("an-2") || new_a.downcase.end_with?("an2")
-            new_a = new_a[0] + " Antonov An-2"
-          end
-
-          # Fix Super Caravan
-          if new_a.downcase.end_with?("super caravan")
-            new_a = new_a[0] + " Cessna 208 Super Caravan"
-          end
-
-          # Fix Caravan
-          if new_a.downcase == "1 caravan"
-            new_a = "1 Cessna 208 Caravan"
-          end
-
-          # Fix Turbine Porter
-          if new_a.downcase.end_with?("turbine porter")
-            new_a = new_a[0] + " Pilatus Porter"
-          end
-
-          # Fix Let L-410 Turbolet
-          if new_a.match("L410") || new_a.match("Let 410") || new_a.match("L-410")
-            new_a = new_a[0] + " Let L-410 Turbolet"
-          end
-
-          new_a = new_a.titleize if new_a.downcase.include?("beech") || new_a.downcase.include?("casa")
-          new_a << " PA31" if new_a.end_with?("Navajo")
-          new_a = "1 #{new_a}" unless new_a[0].is_i?
-
-          # Fix issues with plurals
-          new_a << "s" if new_a.start_with?("2") && !new_a.end_with?("s")
-          new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
-          new_a.end_with?("Super") ? nil : new_a
-        end.compact
       end
     when :location
       States.all.each do |abbrev, name|
@@ -257,8 +271,19 @@ class DZScraper
     end
   end
 
-  def parse_lat_lng(ll)
-    ll.split(" : ").map{|ll| ll.gsub("30-", "30.").gsub("/", "") }.map(&:to_f).reverse
+  def parse_lat_lng(page)
+    links = page.css('a').map(&:values).flatten
+    google_links =  links.select do |item|
+      item.start_with?('https://www.google.com/maps/place/')
+    end
+
+    link = google_links.first
+    coords = link.split('/@').last.split(',')[0..1]
+
+    # fix a couple issues with the data.
+    coords = coords.map{|ll| ll.gsub("30-", "30.").gsub("/", "") }
+
+    coords.map(&:to_f)
   end
 
   def parse_amenities(page)
