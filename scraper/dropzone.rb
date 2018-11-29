@@ -158,9 +158,11 @@ class DZScraper
         .gsub("1 208", "1 Cessna 208")
         .gsub("P-750", "PAC 750")
         .gsub(" (varies)", "")
+        .gsub("Cessna Caravan 208", "Cessna 208")
         .gsub("Skyvan", "SkyVan")
         .gsub("Supervan", "SuperVan")
         .gsub("R44", "Robinson 44")
+        .gsub("850HP ", "")
         .gsub("50HP ", "")
         .gsub("Caravan SuperVan", "SuperVan")
         .gsub("SMG92-", "SMG-92 ")
@@ -175,6 +177,7 @@ class DZScraper
         .gsub("SM-92T", "SM-92T Turbo Finist")
         .gsub("Super Cessna 182", "Cessna 182 (Super)")
         .gsub("Short Cessna 23 Sherpa", "Cessna 23 Sherpa (Short)")
+        .gsub(" - PTG-A21 Turbo Prop", "")
 
       # Fix BlackHawk
       if new_a.downcase.match("blackhawk")
