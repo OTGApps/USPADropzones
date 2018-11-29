@@ -126,7 +126,7 @@ class DZScraper
     pp 'name: ' + dz_data[:properties][:name]
 
     # Grab the lat and lng
-    dz_data[:geometry][:coordinates] = parse_lat_lng(page)
+    dz_data[:geometry][:coordinates] = parse_lat_lng(page).reverse
 
     dz_data[:properties][:website] = page.css('.fa-external-link').first.next_element.text
     dz_data[:properties][:phone] = page.css('.fa-phone').first.next_element.text.chomp.strip
