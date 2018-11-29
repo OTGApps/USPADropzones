@@ -121,12 +121,13 @@ class DZScraper
     # Grab the lat and lng
     dz_data[:geometry][:coordinates] = parse_lat_lng(page)
 
-    # binding.pry
     dz_data[:properties][:website] = page.css('.fa-external-link').first.next_element.text
-    dz_data[:properties][:phone] = page.css('.fa-phone').first.next_element.text
-    dz_data[:properties][:email] = page.css('.fa-envelope').first.next_element.text
-    # binding.pry
+    dz_data[:properties][:phone] = page.css('.fa-phone').first.next_element.text.chomp.strip
+    dz_data[:properties][:email] = page.css('.fa-envelope').first.next_element.text.chomp.strip
     dz_data[:properties][:aircraft] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
+    dz_data[:properties][:description] = page.css('hr').first.next_element.text.chomp.strip
+    # binding.pry
+    # dz_data[:properties][:services] = parse_aircraft_string(page.css('.fa-plane').first.next_sibling.text.gsub(/[[:space:]]/, ' ').strip)
 
 
 
