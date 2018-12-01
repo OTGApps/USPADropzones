@@ -67,22 +67,16 @@ class DZScraper
 
   end
 
-  # def skip_anchors
-  #   @_skip_anchors ||= [
-  #     316,  # Dummy data
-  #     1179, # Marana Skydiving Center
-  #     1149, # Complete Parachute Solutions Tactical Training Facility
-  #     1185, # Military Freefall Solutions Inc.
-  #     1189, # Naval Postgraduate School Foundation Skydiving Club
-  #     1173, # Laurinburg-Maxton
-  #     1333, # The California Parachute Club
-  #     1338, # US Army Parachute Team
-  #     1720, # Sport Parachuting at UC Davis
-  #     1337, # University at Buffalo Skydiving Club
-  #     1876, # Aerograd Kolomna
-  #     1873, # Skydive Broncos at Western Michigan University
-  #   ]
-  # end
+  def skip_anchors
+    @_skip_anchors ||= [
+      196509, # Military Only Laurinburg-Maxton
+      260335, # Military Only
+      206689, # Complete Parachute Solutions Tactical Training Facility
+      260335, # Military Freefall Solutions Inc.
+      261413, # Naval Postgraduate School Foundation Skydiving Club
+      269216, # University at Buffalo Skydiving Club
+    ]
+  end
 
   def scrape
     dzs = {
@@ -90,12 +84,19 @@ class DZScraper
       features: []
     }
     all_files.map do |lf|
+      anchor = lf.split("/").last.split(".").first.to_i
+
+      if skip_anchors.include?(anchor)
+        puts "SKIPPING #{lf}"
+        next
+      end
+
       puts "Scraping #{lf}"
       html = open(lf)
       page = Nokogiri::HTML(html)
       data_we_care_about = page.css('.mx-product-details-template .col-sm-10').first
 
-      parsed = parse(data_we_care_about, lf)
+      parsed = parse(data_we_care_about, anchor)
 
       # These two aren't in the data_we_care_about variable so we have to get it outside that code block.
       parsed[:properties][:training] = page.css('#dnn_ctr1586_ContentPane').css('p').last.parent.parent.parent.parent.text.split('##LOC[Cancel]##').last.strip.split("\r\n")
@@ -111,7 +112,7 @@ class DZScraper
     dzs
   end
 
-  def parse(page, file_name)
+  def parse(page, anchor)
     dz_data = {
       type: 'Feature',
       properties: {},
@@ -121,7 +122,7 @@ class DZScraper
       }
     }
 
-    dz_data[:properties][:anchor] = file_name.split("/").last.split(".").first
+    dz_data[:properties][:anchor] = anchor
     dz_data[:properties][:name] = page.css('h2').first.text.chomp.strip
     pp 'name: ' + dz_data[:properties][:name]
 
