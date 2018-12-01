@@ -7,8 +7,10 @@ class String
     self[/#{Regexp.escape(marker1)}(.*?)#{Regexp.escape(marker2)}/m, 1]
   end
 
-  def titleize
-    split(/(\W)/).map(&:capitalize).join
+  def titleize(exclude = [])
+    split(/(\W)/).map do |word|
+      exclude.map(&:downcase).include?(word.downcase) ? word : word.capitalize
+    end.join
   end
 
   def underscore
