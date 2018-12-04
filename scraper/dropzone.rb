@@ -207,10 +207,17 @@ class DZScraper
         '1 An-2' => '1 AN-2',
         '1 Cessna Caravan' => '1 Cessna 208 Caravan',
         '1 Cessna Caravan Supervan' => '1 Cessna 208 Supervan',
-        '3 Supervans' => '3 Cessna 208 Supervans'
+        '3 Supervans' => '3 Cessna 208 Supervans',
+        '1 Beech 99 King Air' => [
+          '1 Beech 99',
+          '1 King Air'
+        ]
       }.each do |key, value|
         new_a = value if new_a.downcase === key.downcase
       end
+
+      # Eject here if out new_a is an array
+      return new_a if new_a.is_a?(Array)
 
       # Search with whole replacement
       {
@@ -223,12 +230,15 @@ class DZScraper
       end
 
       # Fix issues with plurals
-      new_a << "s" if (new_a.start_with?("2") || new_a.start_with?("3")) && !new_a.end_with?("s")
+      qty = new_a[0].to_f
+      new_a << "s" if (qty > 1) && !new_a.end_with?("s")
       new_a = new_a[0...-1] if new_a.start_with?("1") && new_a.end_with?("s")
-      # new_a.end_with?("Super") ? nil : new_a
+
+      # Make sure they all start with a number.
+      new_a = '1 ' + new_a if !new_a.match(/^(\d )/) && new_a.downcase != 'varies'
 
       new_a
-    end.compact
+    end.flatten.compact
   end
 
   def parse_lat_lng(page)
