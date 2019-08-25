@@ -20,7 +20,6 @@ class DZScraper
     pp @aircraft.flatten.uniq.sort
     puts "*" * 10
 
-    # File.open("../../Dropzones/resources/dropzones.geojson", "w") do |f|
     File.open("../dropzones.geojson","w") do |f|
       f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
     end
@@ -81,6 +80,7 @@ class DZScraper
       260335, # Military Freefall Solutions Inc.
       261413, # Naval Postgraduate School Foundation Skydiving Club
       269216, # University at Buffalo Skydiving Club
+      335306, # The Skydiving Club at Ohio State University
     ]
   end
 
