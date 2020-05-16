@@ -1,6 +1,7 @@
 # require 'json'
 require 'open-uri'
 require 'bundler'
+require 'json'
 Bundler.require
 require './string'
 require './states'
