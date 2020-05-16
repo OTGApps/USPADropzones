@@ -17,9 +17,10 @@ class DZScraper
     pretty = true
     result = scrape
 
-    puts "*" * 10
-    pp @aircraft.flatten.uniq.sort
-    puts "*" * 10
+    # Shows all unique aircraft strings
+    # puts "*" * 10
+    # pp @aircraft.flatten.uniq.sort
+    # puts "*" * 10
 
     File.open("../dropzones.geojson","w") do |f|
       f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
@@ -75,13 +76,8 @@ class DZScraper
 
   def skip_anchors
     @_skip_anchors ||= [
-      196509, # Military Only Laurinburg-Maxton
       260335, # Military Only
-      206689, # Complete Parachute Solutions Tactical Training Facility
-      260335, # Military Freefall Solutions Inc.
-      261413, # Naval Postgraduate School Foundation Skydiving Club
-      269216, # University at Buffalo Skydiving Club
-      335306, # The Skydiving Club at Ohio State University
+      238840, # Military Only
     ]
   end
 
@@ -115,7 +111,7 @@ class DZScraper
       dzs[:features] << parsed #unless skip_anchors.include?(parsed[:properties][:anchor].to_i)
     end
     dzs[:features] = dzs[:features].sort_by{|f| f[:properties][:name]}
-    pp dzs
+    # pp dzs
     dzs
   end
 
