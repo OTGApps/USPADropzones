@@ -23,7 +23,8 @@ class DZScraper
     # puts "*" * 10
 
     File.open("../dropzones.geojson","w") do |f|
-      f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
+    # File.open("../../Dropzones/app/models/root-store/dropzones.json","w") do |f|
+        f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
     end
   end
 
@@ -78,6 +79,10 @@ class DZScraper
     @_skip_anchors ||= [
       260335, # Military Only
       238840, # Military Only
+      261413, # Military Club
+      206689, # Not a dropzone
+      196509, # Military only
+      100490, # Blue Sky Ranch is Skydive the ranch's school
     ]
   end
 
@@ -97,6 +102,7 @@ class DZScraper
       puts "Scraping #{lf}"
       html = open(lf)
       page = Nokogiri::HTML(html)
+      page.xpath("//script").remove
       data_we_care_about = page.css('.mx-product-details-template .col-sm-10').first
 
       parsed = parse(data_we_care_about, anchor)
@@ -171,28 +177,28 @@ class DZScraper
 
       # Substitutions
       {
-        "1-" => "1 ",
-        '1cessna' => '1 Cessna',
-        '1 Caravan' => '1 Cessna 208 Caravan',
-        'Supervan 900' => 'Supervan',
-        'Cessna 208B' => 'Cessna 208',
-        'Cessna Caravan 208' => 'Cessna 208 Caravan',
-        'Cessna172' => 'Cessna 172',
-        'Pac750' => 'PAC 750',
-        'DC3' => 'DC-3',
-        'C 172' => 'Cessna 172',
-        '1 AN-' => '1 Antonov ',
-        '1 An-' => '1 Antonov ',
-        'Tbc-2mc' => 'TBC-2MC',
-        ' - Ptg-A21 Turbo Prop' => '',
-        'Cessna 208b' => 'Cessna 208 Caravan',
-        '182l' => '182',
-        '900 Supervan' => 'Supervan',
-        'Dc-9' => 'DC-9',
-        'Dc3' => 'DC-3',
-        'Super  Otters' => 'Super Twin Otters',
-        'Cessna Caravans' => 'Cessna 208 Caravans',
-        ' Cessna 208s' => ' Cessna 208 Caravans'
+        "Cessna 182e" => "Cessna 182",
+        "C 172" => "Cessna 172",
+        "Dc-9" => "DC-9",
+        "Dc3" => "DC-3",
+        "Super  Otter" => "Super Twin Otter",
+        "Pac750" => "PAC 750",
+        "Cessna 208b" => "Cessna 208 Caravan",
+        "1 AN-" => "1 Antonov ",
+        "1 An-" => "1 Antonov ",
+        "1  1 " => "1 ",
+        "Ceena" => "Cessna",
+        " - Ptg-A21 Turbo Prop" => "",
+        "1 Caravan" => "1 Cessna 208 Caravan",
+        "Supervan 900" => "Supervan",
+        "Cessna 208B" => "Cessna 208",
+        "Cessna Caravan 208" => "Cessna 208 Caravan",
+        "Cessna172" => "Cessna 172",
+        "Tbc-2mc" => "TBC-2MC",
+        "182l" => "182",
+        "900 Supervan" => "Supervan",
+        "Cessna Caravans" => "Cessna 208 Caravans",
+        " Cessna 208s" => " Cessna 208 Caravan",
       }.each do |key, value|
         new_a.gsub!(key, value)
       end
@@ -205,10 +211,11 @@ class DZScraper
         '1 Cessna Caravan' => '1 Cessna 208 Caravan',
         '1 Cessna Caravan Supervan' => '1 Cessna 208 Supervan',
         '3 Supervans' => '3 Cessna 208 Supervans',
-        '1 Beech 99 King Air' => [
-          '1 Beech 99',
-          '1 King Air'
-        ]
+        '1  1 Short C23 Sherpa' => '1 Short C23 Sherpa'
+        # '1 Beech 99 King Air' => [
+        #   '1 Beech 99',
+        #   '1 King Air'
+        # ]
       }.each do |key, value|
         new_a = value if new_a.downcase === key.downcase
       end
