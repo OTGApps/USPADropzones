@@ -22,8 +22,8 @@ class DZScraper
     # pp @aircraft.flatten.uniq.sort
     # puts "*" * 10
 
-    File.open("../dropzones.geojson","w") do |f|
-    # File.open("../../Dropzones/app/models/root-store/dropzones.json","w") do |f|
+    # File.open("../dropzones.geojson","w") do |f|
+    File.open("../../DropzonesRNExpo/app/models/root-store/dropzones.json","w") do |f|
         f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
     end
   end
@@ -161,11 +161,13 @@ class DZScraper
 
   def parse_aircraft_string(aircraft)
     new_value = aircraft.split(" and/or ").join(", ")
+    new_value = new_value.split(" Or ").join(", ")
+    new_value = new_value.split(" & ").join(", ")
     new_value.split(", ").map do |a|
       new_a = a.split("--").first.chomp(" ").chomp(",")
         .titleize([
-          '750xl',
-          '750xstol',
+          # '750xl',
+          # '750xstol',
           'Ptg-A21',
           'an-28',
           'Y-12s',
@@ -177,17 +179,20 @@ class DZScraper
 
       # Substitutions
       {
+        "1 Short " => "",
+        "Antonov-" => "Antonov ",
         "Cessna 182e" => "Cessna 182",
         "C 172" => "Cessna 172",
         "Dc-9" => "DC-9",
         "Dc3" => "DC-3",
         "Super  Otter" => "Super Twin Otter",
-        "Pac750" => "PAC 750",
+        # "Pac750" => "PAC 750",
         "Cessna 208b" => "Cessna 208 Caravan",
         "1 AN-" => "1 Antonov ",
         "1 An-" => "1 Antonov ",
         "1  1 " => "1 ",
         "Ceena" => "Cessna",
+        "Cesna" => "Cessna",
         " - Ptg-A21 Turbo Prop" => "",
         "1 Caravan" => "1 Cessna 208 Caravan",
         "Supervan 900" => "Supervan",
@@ -198,7 +203,10 @@ class DZScraper
         "182l" => "182",
         "900 Supervan" => "Supervan",
         "Cessna Caravans" => "Cessna 208 Caravans",
+        "Cessna Caravan" => "Cessna 208 Caravan",
         " Cessna 208s" => " Cessna 208 Caravan",
+        " Turbine Aircraft" => "",
+        "Beech King Air" => "King Air",
       }.each do |key, value|
         new_a.gsub!(key, value)
       end
@@ -256,6 +264,18 @@ class DZScraper
 
     # fix a couple issues with the data.
     coords = coords.map{|ll| ll.gsub("30-", "30.").gsub("/", "") }
+    if coords[1] === '-6.655726' # Crystal Coast Skydiving
+      coords = [
+        '34.735441',
+        '-76.655726',
+      ]
+    end
+    if coords[1] === '81.6411' # Upstate Skydiving
+      coords = [
+        coords[0],
+        '-' + coords[1],
+      ]
+    end
 
     coords.map(&:to_f)
   end
