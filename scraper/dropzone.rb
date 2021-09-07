@@ -22,8 +22,8 @@ class DZScraper
     # pp @aircraft.flatten.uniq.sort
     # puts "*" * 10
 
-    # File.open("../dropzones.geojson","w") do |f|
-    File.open("../../DropzonesRNExpo/app/models/root-store/dropzones.json","w") do |f|
+    File.open("../dropzones.geojson","w") do |f|
+    # File.open("../../DropzonesRNExpo/app/models/root-store/dropzones.json","w") do |f|
         f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
     end
   end
@@ -83,6 +83,7 @@ class DZScraper
       206689, # Not a dropzone
       196509, # Military only
       100490, # Blue Sky Ranch is Skydive the ranch's school
+      193132, # Skydive the farm merged with SD Georgia
     ]
   end
 
