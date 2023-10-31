@@ -13,65 +13,38 @@ class DZScraper
   def initialize
     cache_files_locally
 
-    pretty = true
-    result = scrape
+    # pretty = true
+    # result = scrape
 
-    # Shows all unique aircraft strings
-    # puts "*" * 10
-    # pp @aircraft.flatten.uniq.sort
-    # puts "*" * 10
+    # # Shows all unique aircraft strings
+    # # puts "*" * 10
+    # # pp @aircraft.flatten.uniq.sort
+    # # puts "*" * 10
 
-    File.open("../dropzones.geojson","w") do |f|
-    # File.open("../../DropzonesRNExpo/app/models/root-store/dropzones.json","w") do |f|
-        f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
-    end
+    # File.open("./dropzones.geojson","w") do |f|
+    # # File.open("../../DropzonesRNExpo/app/models/root-store/dropzones.json","w") do |f|
+    #     f.write(pretty ? JSON.pretty_generate(result) : result.to_json)
+    # end
   end
 
   def cache_files_locally
-    # Get the main dz locator page:
-    file_name = "local_files/000_all.html"
-    unless File.file?(file_name)
-      puts "Writing file to: " + file_name
-      agent.get("https://uspa.org/dzlocator").save(file_name)
-    end
+    # Open and parse the dz_list.json file.
+    # This file needs to be manually updated from the url https://www.uspa.org/DesktopModules/DnnSharp/DnnApiEndpoint/Api.ashx?method=DZList
+    # However, you must do this using the devtools network inspector and copy the response from the request
+    # from this url: https://www.uspa.org/dzlocator?pagesize=16&page=6
+    dz_json_file = File.read('./local_files/dz_list.json')
+    dropzones = JSON.parse(dz_json_file)
 
-    # Extract all the places
-    lines = []
-    File.open(file_name).each do |line|
-      lines << line.strip if line.strip.start_with?('markers.push') || line.strip.start_with?('infoWindowContent.push')
-    end
-
-    # Parse the places
-    places = {}
-    lines.each_with_index do |l, index|
-      next if index.odd?
-
-      account = lines[index+1].scan(/<([^>]*)>/).find{|a| a.first.include?('accountnumber')}.first
-      if account
-        account_number = account.split('=').last
-
-        # Now get the name and lat/long
-        data = l.gsub('markers.push([', '').gsub(']);', '')
-        parsed_data = CSV.parse(data, :converters=> lambda {|f| f ? f.strip : nil}, :quote_char => "'").first
-        places[account_number] = {
-          name: parsed_data[0],
-          latitude: parsed_data[1],
-          longitude: parsed_data[2],
-         }
-      end
-    end
-
-    # Now that we have a list of the places and their lat/long, lets get their
-    # details.
-
-    places.keys.each do |place_account|
-      file_name = "local_files/dropzone/#{place_account}.html"
+    # For each dropzone in the list, we need to get the details page.
+    dropzones.each do |dz|
+      file_name = "local_files/dropzone/#{dz['Id']}.html"
       unless File.file?(file_name)
         puts "Writing file to: " + file_name
-        agent.get(location_url(place_account)).save(file_name)
+        agent.get(location_url(dz['Id'])).save(file_name)
+      else
+        # puts "Skipping #{dz['Id']}"
       end
     end
-
   end
 
   def skip_anchors
@@ -87,10 +60,13 @@ class DZScraper
   end
 
   def scrape
+    # Create the geojson object
     dzs = {
       type: 'FeatureCollection',
       features: []
     }
+
+    # For each file, parse it and add it to the geojson object
     all_files.map do |lf|
       anchor = lf.split("/").last.split(".").first.to_i
 
