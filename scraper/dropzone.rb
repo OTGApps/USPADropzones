@@ -1,10 +1,9 @@
-# require 'json'
 require 'open-uri'
 require 'bundler'
 require 'json'
 Bundler.require
-require './string'
-require './states'
+require './utils/string'
+require './utils/states'
 
 require 'csv'
 
