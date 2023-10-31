@@ -34,6 +34,12 @@ const getDZDetails = async (dzId) => {
     websiteHandle
   );
 
+  const regionHandle = await page.$("i.fa-sitemap");
+  const region = await page.evaluate(
+    (selector) => selector.parentElement.textContent.trim(),
+    regionHandle
+  );
+
   const descriptionHandle = await page.$("hr");
   let description = "";
   try {
@@ -79,8 +85,8 @@ const getDZDetails = async (dzId) => {
     return el != null;
   });
 
-  console.log({ dzName, planes, description, amenities, trainingPrograms, website });
-  return { dzName, planes, description, amenities, trainingPrograms, website };
+  console.log({ dzName, planes, description, amenities, trainingPrograms, website, region });
+  return { dzName, planes, description, amenities, trainingPrograms, website, region };
 };
 
 // const dzGeoJSON = {
@@ -121,6 +127,7 @@ for await (const dzJSON of DropzonesJSONSource) {
       services: dzDetails.amenities,
       website: dzDetails.website,
       airportName: dzJSON.AirportName,
+      region: dzDetails.region,
     },
     geometry: {
       type: "Point",
