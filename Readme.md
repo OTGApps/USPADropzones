@@ -1,10 +1,5 @@
 # USPA Dropzones
-A geojson file of all USPA certified skydiving dropzones.
 
-## The Scraper
+> **This repository is archived.**
 
-This data was scraped from the [USPA website](http://www.uspa.org). I have included the scraper program here. Please don't abuse this... only use local files to test the application.
-
-## Roadmap
-
-1. ~~Include international USPA certified DZs~~
+The dropzone data and scraper that used to live here now lives at **[github.com/OTGApps/Dropzones](https://github.com/OTGApps/Dropzones)**.
